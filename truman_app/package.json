@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "npm run mirage9",
     "mirage": "NEXT_PUBLIC_APP_MODE=mirage next dev --turbopack",
     "mirage2": "NEXT_PUBLIC_APP_MODE=mirage2 next dev --turbopack",
     "mirage3": "NEXT_PUBLIC_APP_MODE=mirage3 next dev --turbopack",
@@ -14,7 +14,7 @@
     "mirage9": "NEXT_PUBLIC_APP_MODE=mirage9 next dev --turbopack",
     "mirage10": "NEXT_PUBLIC_APP_MODE=mirage10 next dev --turbopack",
     "build": "next build",
-    "start": "next start",
+    "start": "NEXT_PUBLIC_APP_MODE=mirage9 next start",
     "lint": "next lint"
   },
   "dependencies": {

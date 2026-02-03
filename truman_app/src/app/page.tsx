@@ -29,6 +29,15 @@ import {
   formatCurrency,
   type Prediction,
 } from "@/lib/gameLogic";
+import {
+  loadGuestState,
+  saveGuestState,
+  type GuestState,
+  type GuestGrimBet,
+  type GuestGrimConcludedBet,
+  type GuestMirageBet,
+  type GuestMirageConcludedBet,
+} from "@/lib/guestStorage";
 
 // Check if we're in Mirage mode
 const isMirageMode = process.env.NEXT_PUBLIC_APP_MODE === "mirage";
@@ -86,6 +95,7 @@ export default function GrimMarket() {
     message: string;
     amount: number;
   } | null>(null);
+  const [guestState, setGuestState] = useState<GuestState>(() => loadGuestState());
 
   // Mirage2 state
   const [mirage2Phase, setMirage2Phase] = useState<"deciding" | "conclusion" | "result">("deciding");
@@ -138,6 +148,12 @@ export default function GrimMarket() {
 
   // Auth state
   const { isLoading: authLoading, user, error: authError } = db.useAuth();
+  const isGuest = !user;
+
+  // Persist guest state in localStorage
+  useEffect(() => {
+    saveGuestState(guestState);
+  }, [guestState]);
 
   // Get today's date
   const todayDate = getTodayDate();
@@ -205,6 +221,24 @@ export default function GrimMarket() {
 
   // User's balance (default to INITIAL_BALANCE)
   const userBalance = userData?.$users?.[0]?.balance ?? INITIAL_BALANCE;
+  const guestGrimActiveBets = guestState.grimBets.active as GuestGrimBet[];
+  const guestGrimConcludedBets = guestState.grimBets.concluded
+    .slice(0, 10) as GuestGrimConcludedBet[];
+  const guestMirageActiveBets = guestState.mirageBets.active as GuestMirageBet[];
+  const guestMirageConcludedBets = guestState.mirageBets.concluded
+    .slice(0, 10) as GuestMirageConcludedBet[];
+  const displayBalance = isGuest ? guestState.balance : userBalance;
+  const mirage2DisplayBalance = isGuest ? guestState.balance : mirage2Balance;
+  const displayActiveBets = isGuest
+    ? currentBetType === "grim"
+      ? guestGrimActiveBets
+      : guestMirageActiveBets
+    : activeBets;
+  const displayConcludedBets = isGuest
+    ? currentBetType === "grim"
+      ? guestGrimConcludedBets
+      : guestMirageConcludedBets
+    : concludedBets;
 
   // Poll backend every second to update death count and resolve bets
   // InstantDB will push updates to all connected clients
@@ -229,6 +263,108 @@ export default function GrimMarket() {
     return () => clearInterval(interval);
   }, []);
 
+  // Resolve guest bets locally
+  useEffect(() => {
+    if (!isGuest) return;
+
+    const interval = setInterval(() => {
+      const currentDeathCount = todayStat?.deathCount;
+      const now = Date.now();
+
+      setGuestState((prev) => {
+        let nextBalance = prev.balance;
+        let grimUpdated = false;
+        let mirageUpdated = false;
+
+        const grimActive: GuestGrimBet[] = [];
+        const grimConcluded: GuestGrimConcludedBet[] = [...prev.grimBets.concluded];
+
+        for (const bet of prev.grimBets.active) {
+          if (bet.expiresAt > now || currentDeathCount === undefined) {
+            grimActive.push(bet);
+            continue;
+          }
+
+          const snapshotCount = bet.snapshotDeathCount ?? 0;
+          let won: boolean | null = null;
+          let payout = 0;
+
+          if (currentDeathCount === snapshotCount) {
+            won = null;
+            payout = bet.amount;
+          } else if (
+            (bet.prediction === "higher" && currentDeathCount > snapshotCount) ||
+            (bet.prediction === "lower" && currentDeathCount < snapshotCount)
+          ) {
+            won = true;
+            payout = bet.amount * 2;
+          } else {
+            won = false;
+            payout = 0;
+          }
+
+          if (payout > 0) {
+            nextBalance += payout;
+          }
+
+          grimConcluded.unshift({
+            ...bet,
+            resolveDeathCount: currentDeathCount,
+            won,
+            payout,
+          });
+          grimUpdated = true;
+        }
+
+        const mirageActive: GuestMirageBet[] = [];
+        const mirageConcluded: GuestMirageConcludedBet[] = [...prev.mirageBets.concluded];
+
+        for (const bet of prev.mirageBets.active) {
+          if (bet.expiresAt > now) {
+            mirageActive.push(bet);
+            continue;
+          }
+
+          const subjectSurvived = Math.random() >= 0.5;
+          const won =
+            (bet.prediction === "yeah" && subjectSurvived) ||
+            (bet.prediction === "nah" && !subjectSurvived);
+          const payout = won ? bet.amount * 2 : 0;
+
+          if (payout > 0) {
+            nextBalance += payout;
+          }
+
+          mirageConcluded.unshift({
+            ...bet,
+            won,
+            payout,
+          });
+          mirageUpdated = true;
+        }
+
+        if (!grimUpdated && !mirageUpdated) {
+          return prev;
+        }
+
+        return {
+          ...prev,
+          balance: nextBalance,
+          grimBets: {
+            active: grimActive,
+            concluded: grimConcluded.slice(0, 50),
+          },
+          mirageBets: {
+            active: mirageActive,
+            concluded: mirageConcluded.slice(0, 50),
+          },
+        };
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isGuest, todayStat?.deathCount, setGuestState]);
+
   // Initialize user balance on first login
   useEffect(() => {
     if (user && userBalance === undefined) {
@@ -245,12 +381,37 @@ export default function GrimMarket() {
 
   // Handle placing a grim bet (higher/lower)
   const handlePlaceBet = async (prediction: Prediction, amount: number) => {
-    if (!user) {
-      setShowAuthModal(true);
+    if (isGuest) {
+      if (amount > guestState.balance) {
+        return;
+      }
+
+      const betId = id();
+      const now = Date.now();
+      const currentDeathCount = todayStat?.deathCount ?? generateDeathCount(todayDate);
+
+      setGuestState((prev) => ({
+        ...prev,
+        balance: prev.balance - amount,
+        grimBets: {
+          active: [
+            {
+              id: betId,
+              prediction,
+              amount,
+              snapshotDeathCount: currentDeathCount,
+              expiresAt: now + 5000,
+              createdAt: now,
+            },
+            ...prev.grimBets.active,
+          ],
+          concluded: prev.grimBets.concluded,
+        },
+      }));
       return;
     }
 
-    if (amount > userBalance) {
+    if (!user || amount > userBalance) {
       return;
     }
 
@@ -278,12 +439,35 @@ export default function GrimMarket() {
 
   // Handle placing a mirage bet (yeah/nah)
   const handlePlaceMirageBet = async (prediction: MiragePrediction, amount: number) => {
-    if (!user) {
-      setShowAuthModal(true);
+    if (isGuest) {
+      if (amount > guestState.balance) {
+        return;
+      }
+
+      const betId = id();
+      const now = Date.now();
+
+      setGuestState((prev) => ({
+        ...prev,
+        balance: prev.balance - amount,
+        mirageBets: {
+          active: [
+            {
+              id: betId,
+              prediction,
+              amount,
+              expiresAt: now + MIRAGE_BET_DURATION,
+              createdAt: now,
+            },
+            ...prev.mirageBets.active,
+          ],
+          concluded: prev.mirageBets.concluded,
+        },
+      }));
       return;
     }
 
-    if (amount > userBalance) {
+    if (!user || amount > userBalance) {
       return;
     }
 
@@ -309,8 +493,17 @@ export default function GrimMarket() {
 
   // Handle placing a mirage2 bet (wife/mom/money)
   const handlePlaceMirage2Bet = (prediction: Mirage2Prediction, amount: number) => {
-    if (!user) {
-      setShowAuthModal(true);
+    if (isGuest) {
+      if (amount > guestState.balance) {
+        return;
+      }
+
+      setGuestState((prev) => ({
+        ...prev,
+        balance: prev.balance - amount,
+      }));
+      setMirage2Bet({ prediction, amount });
+      setMirage2Phase("conclusion");
       return;
     }
 
@@ -332,7 +525,14 @@ export default function GrimMarket() {
       const payout = won ? mirage2Bet.amount * 2 : 0;
 
       if (won) {
-        setMirage2Balance((prev) => prev + payout);
+        if (isGuest) {
+          setGuestState((prev) => ({
+            ...prev,
+            balance: prev.balance + payout,
+          }));
+        } else {
+          setMirage2Balance((prev) => prev + payout);
+        }
       }
 
       setMirage2LastResult({
@@ -351,12 +551,21 @@ export default function GrimMarket() {
 
   // Handle placing a mirage3 bet (wife/mom/money) - uses InstantDB for balance
   const handlePlaceMirage3Bet = async (prediction: Mirage3Prediction, amount: number) => {
-    if (!user) {
-      setShowAuthModal(true);
+    if (isGuest) {
+      if (amount > guestState.balance) {
+        return;
+      }
+
+      setGuestState((prev) => ({
+        ...prev,
+        balance: prev.balance - amount,
+      }));
+      setMirage3Bet({ prediction, amount });
+      setMirage3Phase("conclusion");
       return;
     }
 
-    if (amount > userBalance) {
+    if (!user || amount > userBalance) {
       return;
     }
 
@@ -376,11 +585,18 @@ export default function GrimMarket() {
       const won = mirage3Bet.prediction === "mom";
       const payout = won ? mirage3Bet.amount * 2 : 0;
 
-      if (won && user) {
-        // Add payout to InstantDB balance
-        db.transact(
-          db.tx.$users[user.id].update({ balance: userBalance + payout })
-        );
+      if (won) {
+        if (isGuest) {
+          setGuestState((prev) => ({
+            ...prev,
+            balance: prev.balance + payout,
+          }));
+        } else if (user) {
+          // Add payout to InstantDB balance
+          db.transact(
+            db.tx.$users[user.id].update({ balance: userBalance + payout })
+          );
+        }
       }
 
       setMirage3LastResult({
@@ -397,12 +613,17 @@ export default function GrimMarket() {
 
   // Handle "Posted" button click - adds $100 bonus
   const handlePosted = async () => {
-    if (!user) return;
-
-    // Add $100 bonus to InstantDB balance
-    await db.transact(
-      db.tx.$users[user.id].update({ balance: userBalance + 100 })
-    );
+    if (isGuest) {
+      setGuestState((prev) => ({
+        ...prev,
+        balance: prev.balance + 100,
+      }));
+    } else if (user) {
+      // Add $100 bonus to InstantDB balance
+      await db.transact(
+        db.tx.$users[user.id].update({ balance: userBalance + 100 })
+      );
+    }
 
     setShowPostedConfirmation(true);
 
@@ -417,12 +638,21 @@ export default function GrimMarket() {
 
   // Handle placing a mirage4 bet (lambo/toyota) - fixed $100 bet
   const handlePlaceMirage4Bet = async (prediction: Mirage4Prediction) => {
-    if (!user) {
-      setShowAuthModal(true);
+    if (isGuest) {
+      if (guestState.balance < 100) {
+        return;
+      }
+
+      setGuestState((prev) => ({
+        ...prev,
+        balance: prev.balance - 100,
+      }));
+      setMirage4Bet({ prediction });
+      setMirage4Phase("conclusion");
       return;
     }
 
-    if (userBalance < 100) {
+    if (!user || userBalance < 100) {
       return;
     }
 
@@ -442,11 +672,18 @@ export default function GrimMarket() {
       const won = mirage4Bet.prediction === "toyota";
       const payout = won ? 200 : 0; // 2x payout
 
-      if (won && user) {
-        // Add $200 payout to InstantDB balance
-        db.transact(
-          db.tx.$users[user.id].update({ balance: userBalance + payout })
-        );
+      if (won) {
+        if (isGuest) {
+          setGuestState((prev) => ({
+            ...prev,
+            balance: prev.balance + payout,
+          }));
+        } else if (user) {
+          // Add $200 payout to InstantDB balance
+          db.transact(
+            db.tx.$users[user.id].update({ balance: userBalance + payout })
+          );
+        }
       }
 
       setMirage4LastResult({
@@ -466,12 +703,25 @@ export default function GrimMarket() {
 
   // Handle placing a mirage5 bet (crash/land) - fixed $100 bet
   const handlePlaceMirage5Bet = async (prediction: Mirage5Prediction) => {
-    if (!user) {
-      setShowAuthModal(true);
+    if (isGuest) {
+      if (guestState.balance < 100) {
+        return;
+      }
+
+      setGuestState((prev) => ({
+        ...prev,
+        balance: prev.balance - 100,
+      }));
+
+      // Generate random outcome (50/50)
+      const outcome: Mirage5Prediction = Math.random() < 0.5 ? "crash" : "land";
+
+      setMirage5Bet({ prediction, outcome });
+      setMirage5Phase("conclusion");
       return;
     }
 
-    if (userBalance < 100) {
+    if (!user || userBalance < 100) {
       return;
     }
 
@@ -494,11 +744,18 @@ export default function GrimMarket() {
       const won = mirage5Bet.prediction === mirage5Bet.outcome;
       const payout = won ? 200 : 0; // 2x payout
 
-      if (won && user) {
-        // Add $200 payout to InstantDB balance
-        db.transact(
-          db.tx.$users[user.id].update({ balance: userBalance + payout })
-        );
+      if (won) {
+        if (isGuest) {
+          setGuestState((prev) => ({
+            ...prev,
+            balance: prev.balance + payout,
+          }));
+        } else if (user) {
+          // Add $200 payout to InstantDB balance
+          db.transact(
+            db.tx.$users[user.id].update({ balance: userBalance + payout })
+          );
+        }
       }
 
       setMirage5LastResult({
@@ -518,12 +775,21 @@ export default function GrimMarket() {
 
   // Handle placing a mirage7 bet (crash/land) - fixed $100 bet, crash always wins
   const handlePlaceMirage7Bet = async (prediction: Mirage7Prediction) => {
-    if (!user) {
-      setShowAuthModal(true);
+    if (isGuest) {
+      if (guestState.balance < 100) {
+        return;
+      }
+
+      setGuestState((prev) => ({
+        ...prev,
+        balance: prev.balance - 100,
+      }));
+      setMirage7Bet({ prediction });
+      setMirage7Phase("conclusion");
       return;
     }
 
-    if (userBalance < 100) {
+    if (!user || userBalance < 100) {
       return;
     }
 
@@ -543,11 +809,18 @@ export default function GrimMarket() {
       const won = mirage7Bet.prediction === "crash";
       const payout = won ? 200 : 0; // 2x payout
 
-      if (won && user) {
-        // Add $200 payout to InstantDB balance
-        db.transact(
-          db.tx.$users[user.id].update({ balance: userBalance + payout })
-        );
+      if (won) {
+        if (isGuest) {
+          setGuestState((prev) => ({
+            ...prev,
+            balance: prev.balance + payout,
+          }));
+        } else if (user) {
+          // Add $200 payout to InstantDB balance
+          db.transact(
+            db.tx.$users[user.id].update({ balance: userBalance + payout })
+          );
+        }
       }
 
       setMirage7LastResult({
@@ -567,12 +840,21 @@ export default function GrimMarket() {
 
   // Handle placing a mirage8 bet (hit/miss) - fixed $100 bet, hit always wins
   const handlePlaceMirage8Bet = async (prediction: Mirage8Prediction) => {
-    if (!user) {
-      setShowAuthModal(true);
+    if (isGuest) {
+      if (guestState.balance < 100) {
+        return;
+      }
+
+      setGuestState((prev) => ({
+        ...prev,
+        balance: prev.balance - 100,
+      }));
+      setMirage8Bet({ prediction });
+      setMirage8Phase("conclusion");
       return;
     }
 
-    if (userBalance < 100) {
+    if (!user || userBalance < 100) {
       return;
     }
 
@@ -592,11 +874,18 @@ export default function GrimMarket() {
       const won = mirage8Bet.prediction === "hit";
       const payout = won ? 200 : 0; // 2x payout
 
-      if (won && user) {
-        // Add $200 payout to InstantDB balance
-        db.transact(
-          db.tx.$users[user.id].update({ balance: userBalance + payout })
-        );
+      if (won) {
+        if (isGuest) {
+          setGuestState((prev) => ({
+            ...prev,
+            balance: prev.balance + payout,
+          }));
+        } else if (user) {
+          // Add $200 payout to InstantDB balance
+          db.transact(
+            db.tx.$users[user.id].update({ balance: userBalance + payout })
+          );
+        }
       }
 
       setMirage8LastResult({
@@ -616,19 +905,24 @@ export default function GrimMarket() {
 
   // Handle placing a mirage9 bet - routes to appropriate game logic based on current game
   const handlePlaceMirage9Bet = async (prediction: Mirage5Prediction | Mirage7Prediction | Mirage8Prediction) => {
-    if (!user) {
-      setShowAuthModal(true);
-      return;
-    }
+    if (isGuest) {
+      if (guestState.balance < 100) {
+        return;
+      }
+      setGuestState((prev) => ({
+        ...prev,
+        balance: prev.balance - 100,
+      }));
+    } else {
+      if (!user || userBalance < 100) {
+        return;
+      }
 
-    if (userBalance < 100) {
-      return;
+      // Deduct $100 from InstantDB balance
+      await db.transact(
+        db.tx.$users[user.id].update({ balance: userBalance - 100 })
+      );
     }
-
-    // Deduct $100 from InstantDB balance
-    await db.transact(
-      db.tx.$users[user.id].update({ balance: userBalance - 100 })
-    );
 
     if (mirage9CurrentGame === "mirage5") {
       // Generate random outcome for mirage5 (50/50)
@@ -659,11 +953,18 @@ export default function GrimMarket() {
 
       const payout = won ? 200 : 0; // 2x payout
 
-      if (won && user) {
-        // Add $200 payout to InstantDB balance
-        db.transact(
-          db.tx.$users[user.id].update({ balance: userBalance + payout })
-        );
+      if (won) {
+        if (isGuest) {
+          setGuestState((prev) => ({
+            ...prev,
+            balance: prev.balance + payout,
+          }));
+        } else if (user) {
+          // Add $200 payout to InstantDB balance
+          db.transact(
+            db.tx.$users[user.id].update({ balance: userBalance + payout })
+          );
+        }
       }
 
       setMirage9LastResult({
@@ -684,19 +985,25 @@ export default function GrimMarket() {
 
   // Handle placing a mirage10 bet (bush/shaved) - fixed $100 bet, shaved always wins
   const handlePlaceMirage10Bet = async (prediction: Mirage10Prediction) => {
-    if (!user) {
-      setShowAuthModal(true);
-      return;
-    }
+    if (isGuest) {
+      if (guestState.balance < 100) {
+        return;
+      }
 
-    if (userBalance < 100) {
-      return;
-    }
+      setGuestState((prev) => ({
+        ...prev,
+        balance: prev.balance - 100,
+      }));
+    } else {
+      if (!user || userBalance < 100) {
+        return;
+      }
 
-    // Deduct $100 from InstantDB balance
-    await db.transact(
-      db.tx.$users[user.id].update({ balance: userBalance - 100 })
-    );
+      // Deduct $100 from InstantDB balance
+      await db.transact(
+        db.tx.$users[user.id].update({ balance: userBalance - 100 })
+      );
+    }
 
     setMirage10Bet({ prediction });
     setMirage10Phase("conclusion");
@@ -709,11 +1016,18 @@ export default function GrimMarket() {
       const won = mirage10Bet.prediction === "shaved";
       const payout = won ? 200 : 0; // 2x payout
 
-      if (won && user) {
-        // Add $200 payout to InstantDB balance
-        db.transact(
-          db.tx.$users[user.id].update({ balance: userBalance + payout })
-        );
+      if (won) {
+        if (isGuest) {
+          setGuestState((prev) => ({
+            ...prev,
+            balance: prev.balance + payout,
+          }));
+        } else if (user) {
+          // Add $200 payout to InstantDB balance
+          db.transact(
+            db.tx.$users[user.id].update({ balance: userBalance + payout })
+          );
+        }
       }
 
       setMirage10LastResult({
@@ -803,7 +1117,7 @@ export default function GrimMarket() {
               onEnded={handleMirage7VideoEnded}
               phase={mirage7Phase}
               onPlaceBet={handlePlaceMirage7Bet}
-              disabled={!user}
+              disabled={false}
               currentBet={mirage7Bet}
               lastResult={mirage7LastResult}
             />
@@ -813,12 +1127,12 @@ export default function GrimMarket() {
           {!user && (
             <div className="max-w-md mx-auto mb-8">
               <div className="pixel-panel p-6 text-center">
-                <p className="text-gray-400 text-sm mb-4">Sign in to place bets</p>
+                <p className="text-gray-400 text-sm mb-4">Sign in to save your progress</p>
                 <button
                   onClick={() => setShowAuthModal(true)}
                   className="px-6 py-3 bg-gray-600 hover:bg-gray-500 text-white font-bold text-xs pixel-btn border-gray-700 transition-all"
                 >
-                  SIGN IN TO BET
+                  SIGN IN
                 </button>
               </div>
             </div>
@@ -876,7 +1190,7 @@ export default function GrimMarket() {
               onEnded={handleMirage8VideoEnded}
               phase={mirage8Phase}
               onPlaceBet={handlePlaceMirage8Bet}
-              disabled={!user}
+              disabled={false}
               currentBet={mirage8Bet}
               lastResult={mirage8LastResult}
             />
@@ -886,12 +1200,12 @@ export default function GrimMarket() {
           {!user && (
             <div className="max-w-md mx-auto mb-8">
               <div className="pixel-panel p-6 text-center">
-                <p className="text-gray-400 text-sm mb-4">Sign in to place bets</p>
+                <p className="text-gray-400 text-sm mb-4">Sign in to save your progress</p>
                 <button
                   onClick={() => setShowAuthModal(true)}
                   className="px-6 py-3 bg-gray-600 hover:bg-gray-500 text-white font-bold text-xs pixel-btn border-gray-700 transition-all"
                 >
-                  SIGN IN TO BET
+                  SIGN IN
                 </button>
               </div>
             </div>
@@ -971,7 +1285,7 @@ export default function GrimMarket() {
               onEnded={handleMirage9VideoEnded}
               phase={mirage9Phase}
               onPlaceBet={handlePlaceMirage9Bet as (prediction: Mirage5Prediction) => void}
-              disabled={!user}
+              disabled={false}
               currentBet={mirage9Bet && mirage9Bet.outcome ? { prediction: mirage9Bet.prediction as Mirage5Prediction, outcome: mirage9Bet.outcome } : null}
               lastResult={mirage9LastResult}
               outcome={mirage9Bet?.outcome ?? null}
@@ -990,7 +1304,7 @@ export default function GrimMarket() {
               onEnded={handleMirage9VideoEnded}
               phase={mirage9Phase}
               onPlaceBet={handlePlaceMirage9Bet as (prediction: Mirage7Prediction) => void}
-              disabled={!user}
+              disabled={false}
               currentBet={mirage9Bet ? { prediction: mirage9Bet.prediction as Mirage7Prediction } : null}
               lastResult={mirage9LastResult}
               fullscreen={true}
@@ -1008,7 +1322,7 @@ export default function GrimMarket() {
               onEnded={handleMirage9VideoEnded}
               phase={mirage9Phase}
               onPlaceBet={handlePlaceMirage9Bet as (prediction: Mirage8Prediction) => void}
-              disabled={!user}
+              disabled={false}
               currentBet={mirage9Bet ? { prediction: mirage9Bet.prediction as Mirage8Prediction } : null}
               lastResult={mirage9LastResult}
               fullscreen={true}
@@ -1033,7 +1347,7 @@ export default function GrimMarket() {
               onEnded={handleMirage10VideoEnded}
               phase={mirage10Phase}
               onPlaceBet={handlePlaceMirage10Bet}
-              disabled={!user}
+              disabled={false}
               currentBet={mirage10Bet}
               lastResult={mirage10LastResult}
             />
@@ -1043,12 +1357,12 @@ export default function GrimMarket() {
           {!user && (
             <div className="max-w-md mx-auto mb-8">
               <div className="pixel-panel p-6 text-center">
-                <p className="text-gray-400 text-sm mb-4">Sign in to place bets</p>
+                <p className="text-gray-400 text-sm mb-4">Sign in to save your progress</p>
                 <button
                   onClick={() => setShowAuthModal(true)}
                   className="px-6 py-3 bg-gray-600 hover:bg-gray-500 text-white font-bold text-xs pixel-btn border-gray-700 transition-all"
                 >
-                  SIGN IN TO BET
+                  SIGN IN
                 </button>
               </div>
             </div>
@@ -1108,7 +1422,7 @@ export default function GrimMarket() {
               onEnded={handleMirage5VideoEnded}
               phase={mirage5Phase}
               onPlaceBet={handlePlaceMirage5Bet}
-              disabled={!user}
+              disabled={false}
               currentBet={mirage5Bet}
               lastResult={mirage5LastResult}
               outcome={mirage5Bet?.outcome ?? null}
@@ -1119,12 +1433,12 @@ export default function GrimMarket() {
           {!user && (
             <div className="max-w-md mx-auto mb-8">
               <div className="pixel-panel p-6 text-center">
-                <p className="text-gray-400 text-sm mb-4">Sign in to place bets</p>
+                <p className="text-gray-400 text-sm mb-4">Sign in to save your progress</p>
                 <button
                   onClick={() => setShowAuthModal(true)}
                   className="px-6 py-3 bg-gray-600 hover:bg-gray-500 text-white font-bold text-xs pixel-btn border-gray-700 transition-all"
                 >
-                  SIGN IN TO BET
+                  SIGN IN
                 </button>
               </div>
             </div>
@@ -1178,7 +1492,7 @@ export default function GrimMarket() {
               onEnded={handleMirage4VideoEnded}
               phase={mirage4Phase}
               onPlaceBet={handlePlaceMirage4Bet}
-              disabled={!user}
+              disabled={false}
               currentBet={mirage4Bet}
               lastResult={mirage4LastResult}
             />
@@ -1188,12 +1502,12 @@ export default function GrimMarket() {
           {!user && (
             <div className="max-w-md mx-auto mb-8">
               <div className="pixel-panel p-6 text-center">
-                <p className="text-gray-400 text-sm mb-4">Sign in to place bets</p>
+                <p className="text-gray-400 text-sm mb-4">Sign in to save your progress</p>
                 <button
                   onClick={() => setShowAuthModal(true)}
                   className="px-6 py-3 bg-gray-600 hover:bg-gray-500 text-white font-bold text-xs pixel-btn border-gray-700 transition-all"
                 >
-                  SIGN IN TO BET
+                  SIGN IN
                 </button>
               </div>
             </div>
@@ -1252,9 +1566,9 @@ export default function GrimMarket() {
           {/* Mirage3 betting panel */}
           <div className="max-w-md mx-auto">
             <Mirage3BettingPanel
-              balance={userBalance}
+              balance={displayBalance}
               onPlaceBet={handlePlaceMirage3Bet}
-              disabled={!user}
+              disabled={false}
               onLoginClick={() => setShowAuthModal(true)}
               phase={mirage3Phase}
               currentBet={mirage3Bet}
@@ -1315,9 +1629,9 @@ export default function GrimMarket() {
             {/* Mirage2 betting panel */}
             <div className="max-w-md mx-auto">
               <Mirage2BettingPanel
-                balance={mirage2Balance}
+                balance={mirage2DisplayBalance}
                 onPlaceBet={handlePlaceMirage2Bet}
-                disabled={!user}
+                disabled={false}
                 onLoginClick={() => setShowAuthModal(true)}
                 phase={mirage2Phase}
                 currentBet={mirage2Bet}
@@ -1361,11 +1675,11 @@ export default function GrimMarket() {
             {/* Mirage betting panel */}
             <div className="max-w-md mx-auto">
               <MirageBettingPanel
-                balance={userBalance}
-                activeBets={activeBets}
-                concludedBets={concludedBets}
+                balance={displayBalance}
+                activeBets={displayActiveBets}
+                concludedBets={displayConcludedBets}
                 onPlaceBet={handlePlaceMirageBet}
-                disabled={!user}
+                disabled={false}
                 onLoginClick={() => setShowAuthModal(true)}
               />
             </div>
@@ -1410,12 +1724,12 @@ export default function GrimMarket() {
             {/* Betting panel */}
             <div className="max-w-md mx-auto">
               <BettingPanel
-                balance={userBalance}
-                activeBets={activeBets}
-                concludedBets={concludedBets}
+                balance={displayBalance}
+                activeBets={displayActiveBets}
+                concludedBets={displayConcludedBets}
                 currentDeathCount={todayCount}
                 onPlaceBet={handlePlaceBet}
-                disabled={!user}
+                disabled={false}
                 onLoginClick={() => setShowAuthModal(true)}
               />
             </div>
