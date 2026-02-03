@@ -9,7 +9,7 @@ function SimStats() {
     hospitalized: 32,
     jailed: 18
   })
-  const [isShaking, setIsShaking] = useState(false)
+  const [isGlitching, setIsGlitching] = useState(false)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -20,8 +20,8 @@ function SimStats() {
         hospitalized: Math.floor(Math.random() * (50 - 15 + 1)) + 15,
         jailed: Math.floor(Math.random() * (30 - 8 + 1)) + 8
       })
-      setIsShaking(true)
-      setTimeout(() => setIsShaking(false), 300)
+      setIsGlitching(true)
+      setTimeout(() => setIsGlitching(false), 400)
     }, 2000)
 
     return () => clearInterval(interval)
@@ -38,7 +38,7 @@ function SimStats() {
   return (
     <div className="sim-stats">
       {statItems.map((stat) => (
-        <div key={stat.label} className={`sim-stat-item ${isShaking ? 'shaking' : ''}`}>
+        <div key={stat.label} className={`sim-stat-item ${isGlitching ? 'glitching' : ''}`}>
           <span className="sim-stat-label">{stat.label}</span>
           <span className="sim-stat-value">{stat.value}</span>
         </div>
