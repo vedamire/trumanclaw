@@ -16,8 +16,9 @@ function Background() {
             loop
             muted
             playsInline
+            poster="/videos/trumanshow_clip_poster.jpg"
           >
-            <source src="/videos/trumanshow_clip.mp4" type="video/mp4" />
+            <source src="/videos/trumanshow_clip.webm" type="video/mp4" />
           </video>
         </div>
       </div>
