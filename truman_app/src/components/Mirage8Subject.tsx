@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect } from "react";
+import { MusicToggle } from "@/components/MusicToggle";
 
 export type Mirage8Prediction = "hit" | "miss";
 
@@ -59,6 +60,8 @@ export function Mirage8Subject({
               onEnded={onEnded}
               className="tiktok-video"
             />
+
+            <MusicToggle variant="inline" />
 
             {/* Balance overlay - top right */}
             {userBalance !== undefined && (
