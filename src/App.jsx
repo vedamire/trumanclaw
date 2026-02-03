@@ -1,12 +1,14 @@
 import Background from './components/Background'
 import ChoiceSelector from './components/ChoiceSelector'
 import SimStats from './components/SimStats'
+import EventNotification from './components/EventNotification'
 import './App.css'
 
 function App() {
   return (
     <div className="landing-page">
       <Background />
+      <EventNotification />
 
       <main className="content">
         <div className="title-container">
