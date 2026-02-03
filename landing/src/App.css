@@ -85,6 +85,7 @@
 /* Responsive */
 @media (max-width: 768px) {
   .title {
+    font-size: clamp(2.6rem, 9.5vw, 4.5rem);
     letter-spacing: 0.15em;
   }
 }
@@ -95,6 +96,10 @@
   }
 
   .title {
-    letter-spacing: 0.1em;
+    font-size: clamp(2.2rem, 11vw, 3.2rem);
+    letter-spacing: 0.08em;
+    line-height: 1.1;
+    max-width: 90vw;
+    text-wrap: balance;
   }
 }
