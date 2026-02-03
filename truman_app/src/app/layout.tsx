@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   title: 'Trumanclaw - Gamble with Death',
   description: 'A dark betting game where you predict tomorrow\'s death count. Will it be higher or lower? Place your bets and test your mortality intuition.',
   keywords: ['betting', 'game', 'prediction', 'dark theme'],
+  icons: {
+    icon: '/logo/fallingtv.png',
+  },
 };
 
 export default function RootLayout({
