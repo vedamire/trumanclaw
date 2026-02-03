@@ -84,9 +84,12 @@ export function Mirage7Subject({
             {phase === "deciding" && (
               <div className="tiktok-buttons">
                 <div className="text-center mb-4">
-                  <span className="bg-black/70 px-6 py-2 rounded-lg text-white text-xl font-black">
+                  <button
+                    onClick={onShowHelp}
+                    className="bg-black/70 px-6 py-2 rounded-lg text-white text-xl font-black hover:bg-black/80 transition-colors"
+                  >
                     Crash or Land?
-                  </span>
+                  </button>
                 </div>
                 <div className="flex gap-4">
                   <button
