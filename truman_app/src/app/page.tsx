@@ -133,6 +133,9 @@ export default function GrimMarket() {
   const [mirage10Bet, setMirage10Bet] = useState<{ prediction: Mirage10Prediction } | null>(null);
   const [mirage10LastResult, setMirage10LastResult] = useState<{ won: boolean; amount: number } | null>(null);
 
+  // Mirage9 help modal state
+  const [showMirage9Help, setShowMirage9Help] = useState(false);
+
   // Auth state
   const { isLoading: authLoading, user, error: authError } = db.useAuth();
 
@@ -777,11 +780,12 @@ export default function GrimMarket() {
       {/* Falling TVs animation */}
       <FallingTVs />
 
-      {/* Header */}
+      {/* Header - compact in mirage9 fullscreen mode */}
       <Header
         user={user ? { id: user.id, email: user.email, balance: isMirage2Mode ? mirage2Balance : userBalance } : null}
         onLoginClick={() => setShowAuthModal(true)}
         onLogoutClick={handleLogout}
+        compact={isMirage9Mode}
       />
 
       {/* Mirage7 mode content */}
@@ -930,114 +934,88 @@ export default function GrimMarket() {
         </main>
       )}
 
-      {/* Mirage9 mode content - cycles through mirage5 → mirage7 → mirage8 */}
+      {/* Mirage9 mode content - TikTok-style fullscreen */}
       {isMirage9Mode && (
-        <main className="relative max-w-4xl mx-auto px-2 sm:px-4 py-4 sm:py-8 z-10">
-          {/* Mirage9 video subject - renders appropriate game based on current cycle position */}
-          <div className="mb-6 sm:mb-12">
-            {mirage9CurrentGame === "mirage5" && (
-              <Mirage5Subject
-                videoSrc={
-                  mirage9Phase === "deciding"
-                    ? MIRAGE5_BEGINNING_VIDEO
-                    : mirage9Bet?.outcome === "crash"
-                      ? MIRAGE5_CRASH_CONCLUSION_VIDEO
-                      : MIRAGE5_CONCLUSION_VIDEO
-                }
-                isLooping={mirage9Phase === "deciding"}
-                onEnded={handleMirage9VideoEnded}
-                phase={mirage9Phase}
-                onPlaceBet={handlePlaceMirage9Bet as (prediction: Mirage5Prediction) => void}
-                disabled={!user}
-                currentBet={mirage9Bet && mirage9Bet.outcome ? { prediction: mirage9Bet.prediction as Mirage5Prediction, outcome: mirage9Bet.outcome } : null}
-                lastResult={mirage9LastResult}
-                outcome={mirage9Bet?.outcome ?? null}
-              />
-            )}
-            {mirage9CurrentGame === "mirage7" && (
-              <Mirage7Subject
-                videoSrc={
-                  mirage9Phase === "deciding"
-                    ? MIRAGE7_INTRO_VIDEO
-                    : MIRAGE7_CONCLUSION_VIDEO
-                }
-                isLooping={mirage9Phase === "deciding"}
-                onEnded={handleMirage9VideoEnded}
-                phase={mirage9Phase}
-                onPlaceBet={handlePlaceMirage9Bet as (prediction: Mirage7Prediction) => void}
-                disabled={!user}
-                currentBet={mirage9Bet ? { prediction: mirage9Bet.prediction as Mirage7Prediction } : null}
-                lastResult={mirage9LastResult}
-              />
-            )}
-            {mirage9CurrentGame === "mirage8" && (
-              <Mirage8Subject
-                videoSrc={
-                  mirage9Phase === "deciding"
-                    ? MIRAGE8_INTRO_VIDEO
-                    : MIRAGE8_CONCLUSION_VIDEO
-                }
-                isLooping={mirage9Phase === "deciding"}
-                onEnded={handleMirage9VideoEnded}
-                phase={mirage9Phase}
-                onPlaceBet={handlePlaceMirage9Bet as (prediction: Mirage8Prediction) => void}
-                disabled={!user}
-                currentBet={mirage9Bet ? { prediction: mirage9Bet.prediction as Mirage8Prediction } : null}
-                lastResult={mirage9LastResult}
-              />
-            )}
-          </div>
-
-          {/* Login prompt for non-logged in users */}
-          {!user && (
-            <div className="max-w-md mx-auto mb-8">
-              <div className="pixel-panel p-6 text-center">
-                <p className="text-gray-400 text-sm mb-4">Sign in to place bets</p>
+        <>
+          {/* Help modal */}
+          {showMirage9Help && (
+            <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4">
+              <div className="pixel-panel-white p-6 max-w-md">
+                <h3 className="text-black font-bold text-lg mb-4">How It Works</h3>
+                <div className="space-y-3 text-gray-700 text-sm">
+                  <p><span className="font-bold">1.</span> Cycle through 3 games: Car Stunt, Plane, Boat</p>
+                  <p><span className="font-bold">2.</span> Bet $100 on each outcome</p>
+                  <p><span className="font-bold">3.</span> Win 2x ($200) if you guess correctly!</p>
+                </div>
                 <button
-                  onClick={() => setShowAuthModal(true)}
-                  className="px-6 py-3 bg-gray-600 hover:bg-gray-500 text-white font-bold text-xs pixel-btn border-gray-700 transition-all"
+                  onClick={() => setShowMirage9Help(false)}
+                  className="mt-6 w-full py-3 bg-gray-800 hover:bg-gray-700 text-white font-bold text-sm pixel-btn border-gray-900 transition-all"
                 >
-                  SIGN IN TO BET
+                  GOT IT
                 </button>
               </div>
             </div>
           )}
 
-          {/* Balance display for logged in users */}
-          {user && (
-            <div className="max-w-md mx-auto mb-8">
-              <div className="pixel-panel-white p-4 text-center">
-                <p className="text-gray-600 text-xs uppercase tracking-wider mb-1">Your Balance</p>
-                <p className="text-2xl font-bold text-black">{formatCurrency(userBalance)}</p>
-              </div>
-            </div>
+          {/* Fullscreen video subjects */}
+          {mirage9CurrentGame === "mirage5" && (
+            <Mirage5Subject
+              videoSrc={
+                mirage9Phase === "deciding"
+                  ? MIRAGE5_BEGINNING_VIDEO
+                  : mirage9Bet?.outcome === "crash"
+                    ? MIRAGE5_CRASH_CONCLUSION_VIDEO
+                    : MIRAGE5_CONCLUSION_VIDEO
+              }
+              isLooping={mirage9Phase === "deciding"}
+              onEnded={handleMirage9VideoEnded}
+              phase={mirage9Phase}
+              onPlaceBet={handlePlaceMirage9Bet as (prediction: Mirage5Prediction) => void}
+              disabled={!user}
+              currentBet={mirage9Bet && mirage9Bet.outcome ? { prediction: mirage9Bet.prediction as Mirage5Prediction, outcome: mirage9Bet.outcome } : null}
+              lastResult={mirage9LastResult}
+              outcome={mirage9Bet?.outcome ?? null}
+              fullscreen={true}
+              onShowHelp={() => setShowMirage9Help(true)}
+            />
           )}
-
-          {/* How it works - Mirage9 */}
-          <div className="mt-16 text-center w-[85%] mx-auto">
-            <h3 className="text-xs font-semibold text-gray-600 mb-6 uppercase tracking-wider">How It Works</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="pixel-panel-white p-4">
-                <div className="text-xl mb-2 text-black">1</div>
-                <p className="text-gray-600 text-[10px] leading-relaxed">
-                  Cycle through 3 games: Car Stunt → Plane → Boat
-                </p>
-              </div>
-              <div className="pixel-panel-white p-4">
-                <div className="text-xl mb-2 text-black">2</div>
-                <p className="text-gray-600 text-[10px] leading-relaxed">
-                  Bet $100 on each outcome and watch results
-                </p>
-              </div>
-              <div className="pixel-panel-white p-4">
-                <div className="text-xl mb-2 text-black">3</div>
-                <p className="text-gray-600 text-[10px] leading-relaxed">
-                  Win 2x ($200) if you guess correctly!
-                </p>
-              </div>
-            </div>
-          </div>
-        </main>
+          {mirage9CurrentGame === "mirage7" && (
+            <Mirage7Subject
+              videoSrc={
+                mirage9Phase === "deciding"
+                  ? MIRAGE7_INTRO_VIDEO
+                  : MIRAGE7_CONCLUSION_VIDEO
+              }
+              isLooping={mirage9Phase === "deciding"}
+              onEnded={handleMirage9VideoEnded}
+              phase={mirage9Phase}
+              onPlaceBet={handlePlaceMirage9Bet as (prediction: Mirage7Prediction) => void}
+              disabled={!user}
+              currentBet={mirage9Bet ? { prediction: mirage9Bet.prediction as Mirage7Prediction } : null}
+              lastResult={mirage9LastResult}
+              fullscreen={true}
+              onShowHelp={() => setShowMirage9Help(true)}
+            />
+          )}
+          {mirage9CurrentGame === "mirage8" && (
+            <Mirage8Subject
+              videoSrc={
+                mirage9Phase === "deciding"
+                  ? MIRAGE8_INTRO_VIDEO
+                  : MIRAGE8_CONCLUSION_VIDEO
+              }
+              isLooping={mirage9Phase === "deciding"}
+              onEnded={handleMirage9VideoEnded}
+              phase={mirage9Phase}
+              onPlaceBet={handlePlaceMirage9Bet as (prediction: Mirage8Prediction) => void}
+              disabled={!user}
+              currentBet={mirage9Bet ? { prediction: mirage9Bet.prediction as Mirage8Prediction } : null}
+              lastResult={mirage9LastResult}
+              fullscreen={true}
+              onShowHelp={() => setShowMirage9Help(true)}
+            />
+          )}
+        </>
       )}
 
       {/* Mirage10 mode content */}

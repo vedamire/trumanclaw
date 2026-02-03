@@ -13,6 +13,9 @@ interface Mirage8SubjectProps {
   disabled: boolean;
   currentBet: { prediction: Mirage8Prediction } | null;
   lastResult: { won: boolean; amount: number } | null;
+  fullscreen?: boolean;
+  userBalance?: number;
+  onShowHelp?: () => void;
 }
 
 export function Mirage8Subject({
@@ -24,6 +27,9 @@ export function Mirage8Subject({
   disabled,
   currentBet,
   lastResult,
+  fullscreen,
+  userBalance,
+  onShowHelp,
 }: Mirage8SubjectProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -36,6 +42,112 @@ export function Mirage8Subject({
       });
     }
   }, [videoSrc]);
+
+  // TikTok-style fullscreen layout
+  if (fullscreen) {
+    return (
+      <div className="tiktok-container">
+        <div className="tiktok-video-wrapper">
+          <div className="tiktok-video-inner">
+            <video
+              ref={videoRef}
+              src={videoSrc}
+              autoPlay
+              loop={isLooping}
+              muted
+              playsInline
+              onEnded={onEnded}
+              className="tiktok-video"
+            />
+
+            {/* Balance overlay - top right */}
+            {userBalance !== undefined && (
+              <div className="tiktok-balance">
+                <div className="px-3 py-2 bg-black/70 backdrop-blur-sm rounded-lg">
+                  <p className="text-gray-400 text-[10px] uppercase">Balance</p>
+                  <p className="text-white text-lg font-bold">${userBalance}</p>
+                </div>
+              </div>
+            )}
+
+            {/* Help icon - top left */}
+            {onShowHelp && (
+              <button
+                onClick={onShowHelp}
+                className="tiktok-help w-10 h-10 bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center text-white text-lg font-bold hover:bg-black/80 transition-colors"
+              >
+                ?
+              </button>
+            )}
+
+            {/* Buttons at bottom - only during deciding phase */}
+            {phase === "deciding" && (
+              <div className="tiktok-buttons">
+                <div className="text-center mb-4">
+                  <span className="bg-black/70 px-6 py-2 rounded-lg text-white text-xl font-black">
+                    Hit or Miss?
+                  </span>
+                </div>
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => onPlaceBet("hit")}
+                    disabled={disabled}
+                    className={`flex-1 py-5 bg-gray-700/90 hover:bg-gray-600 text-white font-bold
+                      pixel-btn border-gray-800 transition-all shadow-lg rounded-lg
+                      ${disabled ? "opacity-50 cursor-not-allowed" : "hover:scale-105"}
+                    `}
+                  >
+                    <span className="text-2xl font-black">HIT</span>
+                  </button>
+                  <button
+                    onClick={() => onPlaceBet("miss")}
+                    disabled={disabled}
+                    className={`flex-1 py-5 bg-gray-600/90 hover:bg-gray-500 text-white font-bold
+                      pixel-btn border-gray-700 transition-all shadow-lg rounded-lg
+                      ${disabled ? "opacity-50 cursor-not-allowed" : "hover:scale-105"}
+                    `}
+                  >
+                    <span className="text-2xl font-black">MISS</span>
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Current bet indicator during conclusion phase */}
+            {phase === "conclusion" && currentBet && (
+              <div className="tiktok-buttons">
+                <div className="text-center">
+                  <div className="px-6 py-3 border-2 animate-pulse bg-gray-800/80 border-gray-500 rounded-lg inline-block">
+                    <span className="text-white font-bold text-sm sm:text-base">
+                      YOUR BET: $100 on {currentBet.prediction === "hit" ? "HIT" : "MISS"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Result overlay */}
+            {phase === "result" && lastResult && (
+              <div className={`absolute inset-0 flex items-center justify-center ${
+                lastResult.won ? "bg-green-900/80" : "bg-red-900/80"
+              }`}>
+                <div className="text-center animate-pulse">
+                  <p className="text-white text-2xl sm:text-4xl font-black mb-2">
+                    MISSILE HITS!
+                  </p>
+                  <p className={`text-3xl sm:text-5xl font-black ${
+                    lastResult.won ? "text-green-400" : "text-red-400"
+                  }`}>
+                    {lastResult.won ? `YOU WON +$${lastResult.amount}!` : `YOU LOST -$${lastResult.amount}!`}
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-full">

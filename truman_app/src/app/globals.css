@@ -408,3 +408,72 @@ button {
 .animate-pulse-border {
   animation: pulse-border 1s ease-in-out infinite;
 }
+
+/* TikTok-style fullscreen video container */
+.tiktok-container {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile */
+  background-color: #000;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url('/backgrounds/super_truman_background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  z-index: 50;
+}
+
+.tiktok-video-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tiktok-video-inner {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+/* Desktop: constrain to 9:16 aspect ratio */
+@media (min-width: 768px) {
+  .tiktok-video-inner {
+    max-width: calc(100vh * 9 / 16);
+  }
+}
+
+.tiktok-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Balance overlay - top right with safe area */
+.tiktok-balance {
+  position: absolute;
+  top: max(env(safe-area-inset-top, 0px), 16px);
+  right: max(env(safe-area-inset-right, 0px), 16px);
+  z-index: 60;
+}
+
+/* Help icon - top left */
+.tiktok-help {
+  position: absolute;
+  top: max(env(safe-area-inset-top, 0px), 16px);
+  left: max(env(safe-area-inset-left, 0px), 16px);
+  z-index: 60;
+}
+
+/* Bottom buttons container with safe area */
+.tiktok-buttons {
+  position: absolute;
+  bottom: max(env(safe-area-inset-bottom, 0px), 24px);
+  left: 16px;
+  right: 16px;
+  z-index: 60;
+}
