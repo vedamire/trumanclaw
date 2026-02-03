@@ -80,7 +80,7 @@ const generateRandomBet = (excludeUsernames: string[] = []): SimulatedBet => {
 const generateInitialBets = (): SimulatedBet[] => {
   const bets: SimulatedBet[] = [];
   const usedUsernames: string[] = [];
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 1; i++) {
     const bet = generateRandomBet(usedUsernames);
     bets.push(bet);
     usedUsernames.push(bet.username);
@@ -93,7 +93,7 @@ export function Header({ user, onLoginClick, onLogoutClick }: HeaderProps) {
 
   // Simulated betting feed state
   const [bets, setBets] = useState<SimulatedBet[]>(generateInitialBets);
-  const timeoutRefs = useRef<(NodeJS.Timeout | null)[]>([null, null]);
+  const timeoutRefs = useRef<(NodeJS.Timeout | null)[]>([null]);
 
   // Update bet at a specific index with glitch animation
   const updateBet = useCallback((index: number) => {
@@ -130,7 +130,7 @@ export function Header({ user, onLoginClick, onLogoutClick }: HeaderProps) {
 
   // Initialize independent update chains for each bet slot
   useEffect(() => {
-    [0, 1].forEach((index) => {
+    [0].forEach((index) => {
       const initialDelay = Math.floor(Math.random() * 2000) + 500;
       timeoutRefs.current[index] = setTimeout(() => updateBet(index), initialDelay);
     });
@@ -182,7 +182,7 @@ export function Header({ user, onLoginClick, onLogoutClick }: HeaderProps) {
                 className={`text-[9px] flex items-baseline gap-x-1 ${bet.isGlitching ? 'glitch-bet' : ''}`}
               >
                 <span className="text-gray-500 truncate max-w-[105px]">{bet.username}</span>
-                <span className={`whitespace-nowrap ${bet.won ? 'text-gray-900' : 'text-gray-400'}`}>
+                <span className={`whitespace-nowrap ${bet.won ? 'text-green-600' : 'text-red-500'}`}>
                   {bet.won ? ' PUMP ' : ' RIP '}
                   {bet.won ? '+' : '-'}${bet.amount.toLocaleString()}
                 </span>

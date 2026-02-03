@@ -1,4 +1,4 @@
-// Game logic utilities for Grim Market
+// Game logic utilities for Trumanclaw
 
 export const INITIAL_BALANCE = 1000;
 export const PAYOUT_MULTIPLIER = 2;

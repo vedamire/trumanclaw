@@ -9,7 +9,7 @@ const pixelFont = Press_Start_2P({
 });
 
 export const metadata: Metadata = {
-  title: 'Grim Market - Gamble with Death',
+  title: 'Trumanclaw - Gamble with Death',
   description: 'A dark betting game where you predict tomorrow\'s death count. Will it be higher or lower? Place your bets and test your mortality intuition.',
   keywords: ['betting', 'game', 'prediction', 'dark theme'],
 };

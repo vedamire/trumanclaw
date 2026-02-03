@@ -84,15 +84,14 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
         {/* Header */}
         <div className="text-center mb-8">
           <Image
-            src="/logo/new_grim_logo.png"
-            alt="Grim Market"
+            src="/logo/fallingtv.png"
+            alt="Trumanclaw"
             width={80}
             height={80}
             className="mx-auto mb-4"
-            style={{ imageRendering: 'pixelated' }}
           />
           <h2 className="text-sm font-bold text-gray-100 mb-2 uppercase">
-            Enter the <span className="text-red-500">Grim Market</span>
+            Enter <span className="text-red-500">Trumanclaw</span>
           </h2>
           <p className="text-gray-500 text-[10px] leading-relaxed">
             {step === "email"

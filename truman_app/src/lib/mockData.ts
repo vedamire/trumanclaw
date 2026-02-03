@@ -1,4 +1,4 @@
-// Mock death count generator for the Grim Market game
+// Mock death count generator for the Trumanclaw game
 
 const BASE_DEATH_COUNT = 170000; // Base daily death count
 const VARIANCE = 1000; // Small variance for day-to-day differences

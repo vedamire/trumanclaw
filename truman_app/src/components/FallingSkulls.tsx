@@ -56,7 +56,7 @@ export function FallingSkulls() {
           }}
         >
           <img
-            src="/logo/pixel_grim_logo_transparent.png"
+            src="/logo/fallingtv.png"
             alt=""
             className="w-full h-full object-contain"
             style={{

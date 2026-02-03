@@ -748,7 +748,7 @@ export default function GrimMarket() {
         <div className="text-center">
           <SkullLoader />
           <p className="text-gray-500 mt-4 text-[10px] uppercase tracking-wider">
-            {isMirage10Mode ? "Loading Mirage 10..." : isMirage9Mode ? "Loading Mirage 9..." : isMirage8Mode ? "Loading Mirage 8..." : isMirage7Mode ? "Loading Mirage 7..." : isMirage5Mode ? "Loading Mirage 5..." : isMirage4Mode ? "Loading Mirage 4..." : isMirage3Mode ? "Loading Mirage 3..." : isMirage2Mode ? "Loading Mirage 2..." : isMirageMode ? "Loading Mirage..." : "Loading the Grim Market..."}
+            {isMirage10Mode ? "Loading Mirage 10..." : isMirage9Mode ? "Loading Mirage 9..." : isMirage8Mode ? "Loading Mirage 8..." : isMirage7Mode ? "Loading Mirage 7..." : isMirage5Mode ? "Loading Mirage 5..." : isMirage4Mode ? "Loading Mirage 4..." : isMirage3Mode ? "Loading Mirage 3..." : isMirage2Mode ? "Loading Mirage 2..." : isMirageMode ? "Loading Mirage..." : "Loading Trumanclaw..."}
           </p>
         </div>
       </div>
