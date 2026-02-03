@@ -27,7 +27,7 @@ export function Mirage3Subject({ videoSrc, isLooping, onEnded, phase }: Mirage3S
     return (
       <div className="relative w-[95%] sm:w-[85%] md:w-[80%] mx-auto">
         {/* Blocky glow effect */}
-        <div className="absolute inset-0 bg-green-600/20 blur-2xl" />
+        <div className="absolute inset-0 bg-white/10 blur-2xl" />
 
         <div className="relative pixel-panel p-4 sm:p-6 md:p-8">
           {/* Video thumbnail/preview container */}
@@ -44,7 +44,7 @@ export function Mirage3Subject({ videoSrc, isLooping, onEnded, phase }: Mirage3S
             {/* Overlay with share message */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none flex items-center justify-center">
               <div className="text-center">
-                <ShareIcon className="w-16 h-16 mx-auto text-green-400 mb-4 animate-bounce" />
+                <ShareIcon className="w-16 h-16 mx-auto text-white mb-4 animate-bounce" />
                 <p className="text-white text-2xl font-bold">Share & Earn!</p>
               </div>
             </div>
@@ -52,7 +52,7 @@ export function Mirage3Subject({ videoSrc, isLooping, onEnded, phase }: Mirage3S
 
           {/* Text */}
           <p
-            className="text-green-400 text-3xl sm:text-4xl md:text-5xl mt-4 sm:mt-6 text-center font-medium"
+            className="text-white text-3xl sm:text-4xl md:text-5xl mt-4 sm:mt-6 text-center font-medium"
             style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}
           >
             Download & Post for $100!
@@ -65,7 +65,7 @@ export function Mirage3Subject({ videoSrc, isLooping, onEnded, phase }: Mirage3S
   return (
     <div className="relative w-[95%] sm:w-[85%] md:w-[80%] mx-auto">
       {/* Blocky glow effect */}
-      <div className="absolute inset-0 bg-pink-600/20 blur-2xl" />
+      <div className="absolute inset-0 bg-white/10 blur-2xl" />
 
       <div className="relative pixel-panel p-4 sm:p-6 md:p-8">
         {/* Video container */}
@@ -86,7 +86,7 @@ export function Mirage3Subject({ videoSrc, isLooping, onEnded, phase }: Mirage3S
 
         {/* Question text */}
         <p
-          className="text-pink-400 text-3xl sm:text-4xl md:text-5xl mt-4 sm:mt-6 text-center font-medium"
+          className="text-white text-3xl sm:text-4xl md:text-5xl mt-4 sm:mt-6 text-center font-medium"
           style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}
         >
           Wife, Mom or $90M?

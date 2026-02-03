@@ -65,8 +65,8 @@ export function Mirage10Subject({
               onClick={() => onPlaceBet("bush")}
               disabled={disabled}
               className={`absolute left-2 top-[calc(50%+150px)] sm:top-[calc(50%+250px)] -translate-y-1/2 px-12 py-8
-                bg-amber-700/90 hover:bg-amber-600 text-white font-bold
-                pixel-btn border-amber-900 transition-all shadow-lg
+                bg-gray-700/90 hover:bg-gray-600 text-white font-bold
+                pixel-btn border-gray-800 transition-all shadow-lg
                 ${disabled ? "opacity-50 cursor-not-allowed" : "hover:scale-105"}
               `}
             >
@@ -78,8 +78,8 @@ export function Mirage10Subject({
               onClick={() => onPlaceBet("shaved")}
               disabled={disabled}
               className={`absolute right-2 top-[calc(50%+150px)] sm:top-[calc(50%+250px)] -translate-y-1/2 px-12 py-8
-                bg-pink-500/90 hover:bg-pink-400 text-white font-bold
-                pixel-btn border-pink-700 transition-all shadow-lg
+                bg-gray-600/90 hover:bg-gray-500 text-white font-bold
+                pixel-btn border-gray-700 transition-all shadow-lg
                 ${disabled ? "opacity-50 cursor-not-allowed" : "hover:scale-105"}
               `}
             >
@@ -91,11 +91,7 @@ export function Mirage10Subject({
         {/* Current bet indicator during conclusion phase */}
         {phase === "conclusion" && currentBet && (
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
-            <div className={`px-6 py-3 border-2 animate-pulse ${
-              currentBet.prediction === "bush"
-                ? "bg-amber-900/80 border-amber-500"
-                : "bg-pink-900/80 border-pink-500"
-            }`}>
+            <div className="px-6 py-3 border-2 animate-pulse bg-gray-800/80 border-gray-500">
               <span className="text-white font-bold text-sm sm:text-base">
                 YOUR BET: $100 on {currentBet.prediction === "bush" ? "BUSH" : "SHAVED"}
               </span>

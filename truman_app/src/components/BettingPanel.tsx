@@ -113,7 +113,7 @@ function ActiveBetItem({
         : status.color === "green"
           ? "border-green-500 bg-green-900/30 shadow-[0_0_15px_rgba(34,197,94,0.5)]"
           : status.color === "blue"
-            ? "border-blue-500 bg-blue-900/30 shadow-[0_0_15px_rgba(59,130,246,0.5)]"
+            ? "border-gray-500 bg-gray-800/30 shadow-[0_0_15px_rgba(255,255,255,0.3)]"
             : "border-red-500 bg-red-900/30 shadow-[0_0_15px_rgba(239,68,68,0.5)]"
     }`}>
       {/* Circular countdown timer */}
@@ -140,7 +140,7 @@ function ActiveBetItem({
             strokeDasharray={circumference}
             strokeDashoffset={strokeDashoffset}
             strokeLinecap="butt"
-            className={timeLeft <= 1 ? "text-red-500" : timeLeft <= 3 ? "text-yellow-500" : "text-blue-500"}
+            className={timeLeft <= 1 ? "text-red-500" : timeLeft <= 3 ? "text-white" : "text-white"}
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
@@ -167,7 +167,7 @@ function ActiveBetItem({
               : status.color === "green"
                 ? "bg-green-600/20 text-green-400 border-green-600/30"
                 : status.color === "blue"
-                  ? "bg-blue-600/20 text-blue-400 border-blue-600/30"
+                  ? "bg-gray-600/20 text-white border-gray-600/30"
                   : "bg-red-600/20 text-red-400 border-red-600/30"
           }`}>
             {status.text}
@@ -195,7 +195,7 @@ function ActiveBetItem({
 
       {/* Amount */}
       <div className="text-right flex-shrink-0">
-        <p className="text-yellow-400 text-xs font-semibold">
+        <p className="text-white text-xs font-semibold">
           {formatCurrency(bet.amount)}
         </p>
         <p className="text-gray-600 text-[8px]">
@@ -401,18 +401,18 @@ export function BettingPanel({
             <div className="flex items-center gap-3">
               <div className="relative">
                 <span className="flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full bg-blue-400 opacity-75"></span>
-                  <span className="relative inline-flex h-3 w-3 bg-blue-500"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full bg-white opacity-75"></span>
+                  <span className="relative inline-flex h-3 w-3 bg-white"></span>
                 </span>
               </div>
               <h3 className="text-xs font-semibold text-gray-300 uppercase">Active Bets</h3>
-              <span className="bg-blue-500/20 text-blue-400 text-[10px] px-2 py-0.5">
+              <span className="bg-white/20 text-white text-[10px] px-2 py-0.5">
                 {activeBets.length}
               </span>
             </div>
             <div className="flex items-center gap-4">
               <div className="text-right">
-                <p className="text-yellow-400 text-xs font-semibold">
+                <p className="text-white text-xs font-semibold">
                   {formatCurrency(activeBets.reduce((sum, bet) => sum + bet.amount, 0))}
                 </p>
                 <p className="text-gray-500 text-[8px] uppercase">at risk</p>
@@ -527,7 +527,7 @@ export function BettingPanel({
               disabled={disabled}
               min={1}
               max={balance}
-              className="w-full pixel-input py-3 pl-8 pr-4 text-white text-sm focus:outline-none focus:border-yellow-500/50 disabled:opacity-50"
+              className="w-full pixel-input py-3 pl-8 pr-4 text-white text-sm focus:outline-none focus:border-white/50 disabled:opacity-50"
             />
           </div>
         </div>
@@ -541,7 +541,7 @@ export function BettingPanel({
               disabled={disabled || preset > balance}
               className={`px-3 py-1.5 text-[10px] font-medium transition-colors border-2 ${
                 amount === preset
-                  ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/50"
+                  ? "bg-white/20 text-white border-white/50"
                   : "bg-gray-800 text-gray-400 border-gray-700 hover:bg-gray-700 disabled:opacity-50"
               }`}
             >
@@ -561,7 +561,7 @@ export function BettingPanel({
         <div className="bg-gray-900/50 border-2 border-gray-700 p-3 mb-4">
           <div className="flex justify-between text-[10px]">
             <span className="text-gray-500 uppercase">Potential Payout</span>
-            <span className="text-yellow-400 font-semibold">
+            <span className="text-white font-semibold">
               {formatCurrency(calculatePotentialPayout(amount))}
             </span>
           </div>
@@ -575,7 +575,7 @@ export function BettingPanel({
         {/* Place bet button */}
         <button
           onClick={disabled ? onLoginClick : handlePlaceBet}
-          className="w-full py-4 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-xs pixel-btn border-yellow-700 transition-all"
+          className="w-full py-4 bg-gray-600 hover:bg-gray-500 text-white font-bold text-xs pixel-btn border-gray-700 transition-all"
         >
           {disabled ? "SIGN IN TO BET" : "PLACE BET"}
         </button>
@@ -679,13 +679,13 @@ export function BettingPanel({
             <div className="bg-gray-900/50 border-2 border-gray-700 p-3 mb-4">
               <div className="flex justify-between text-[10px]">
                 <span className="text-gray-500 uppercase">Bet Amount</span>
-                <span className="text-yellow-400 font-semibold">
+                <span className="text-white font-semibold">
                   {formatCurrency(amount)}
                 </span>
               </div>
               <div className="flex justify-between text-[10px] mt-1">
                 <span className="text-gray-500 uppercase">Potential Payout</span>
-                <span className="text-yellow-400 font-semibold">
+                <span className="text-white font-semibold">
                   {formatCurrency(calculatePotentialPayout(amount))}
                 </span>
               </div>
@@ -694,7 +694,7 @@ export function BettingPanel({
             <button
               onClick={handlePopupPlaceBet}
               disabled={!popupPrediction}
-              className="w-full py-4 bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-xs pixel-btn border-yellow-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-gray-600 hover:bg-gray-500 text-white font-bold text-xs pixel-btn border-gray-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               PLACE BET
             </button>

@@ -121,7 +121,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
             <button
               type="submit"
               disabled={isLoading || !email}
-              className="w-full py-3 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold pixel-btn border-red-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed uppercase"
+              className="w-full py-3 bg-gray-600 hover:bg-gray-700 text-white text-xs font-semibold pixel-btn border-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed uppercase"
             >
               {isLoading ? "Sending..." : "Send Magic Code"}
             </button>
@@ -148,7 +148,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
             <button
               type="submit"
               disabled={isLoading || !code}
-              className="w-full py-3 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold pixel-btn border-red-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed uppercase"
+              className="w-full py-3 bg-gray-600 hover:bg-gray-700 text-white text-xs font-semibold pixel-btn border-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed uppercase"
             >
               {isLoading ? "Verifying..." : "Sign In"}
             </button>

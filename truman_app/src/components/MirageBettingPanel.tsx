@@ -137,7 +137,7 @@ function ActiveBetItem({ bet }: { bet: Bet }) {
             strokeDasharray={circumference}
             strokeDashoffset={strokeDashoffset}
             strokeLinecap="butt"
-            className={isInTenSecondPhase ? "text-red-500" : "text-pink-500"}
+            className={isInTenSecondPhase ? "text-red-500" : "text-white"}
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
@@ -157,7 +157,7 @@ function ActiveBetItem({ bet }: { bet: Bet }) {
           }`}>
             {isYeah ? "SURVIVES" : "DIES"}
           </span>
-          <span className="px-3 py-1 text-sm font-semibold bg-pink-600/20 text-pink-400 border border-pink-600/30">
+          <span className="px-3 py-1 text-sm font-semibold bg-gray-600/20 text-white border border-gray-600/30">
             PENDING
           </span>
         </div>
@@ -168,7 +168,7 @@ function ActiveBetItem({ bet }: { bet: Bet }) {
 
       {/* Amount - larger */}
       <div className="text-right flex-shrink-0">
-        <p className="text-yellow-400 text-lg font-semibold">
+        <p className="text-white text-lg font-semibold">
           {formatCurrency(bet.amount)}
         </p>
       </div>
@@ -367,18 +367,18 @@ export function MirageBettingPanel({
             <div className="flex items-center gap-3">
               <div className="relative">
                 <span className="flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full bg-pink-400 opacity-75"></span>
-                  <span className="relative inline-flex h-3 w-3 bg-pink-500"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full bg-white opacity-75"></span>
+                  <span className="relative inline-flex h-3 w-3 bg-white"></span>
                 </span>
               </div>
               <h3 className="text-xs font-semibold text-gray-300 uppercase">Active Bets</h3>
-              <span className="bg-pink-500/20 text-pink-400 text-[10px] px-2 py-0.5">
+              <span className="bg-white/20 text-white text-[10px] px-2 py-0.5">
                 {activeBets.length}
               </span>
             </div>
             <div className="flex items-center gap-4">
               <div className="text-right">
-                <p className="text-yellow-400 text-xs font-semibold">
+                <p className="text-white text-xs font-semibold">
                   {formatCurrency(activeBets.reduce((sum, bet) => sum + bet.amount, 0))}
                 </p>
                 <p className="text-gray-500 text-[8px] uppercase">at risk</p>
@@ -479,7 +479,7 @@ export function MirageBettingPanel({
               disabled={disabled}
               min={1}
               max={balance}
-              className="w-full pixel-input py-3 pl-8 pr-4 text-white text-sm focus:outline-none focus:border-pink-500/50 disabled:opacity-50"
+              className="w-full pixel-input py-3 pl-8 pr-4 text-white text-sm focus:outline-none focus:border-white/50 disabled:opacity-50"
             />
           </div>
         </div>
@@ -493,7 +493,7 @@ export function MirageBettingPanel({
               disabled={disabled || preset > balance}
               className={`px-3 py-1.5 text-[10px] font-medium transition-colors border-2 ${
                 amount === preset
-                  ? "bg-pink-500/20 text-pink-400 border-pink-500/50"
+                  ? "bg-white/20 text-white border-white/50"
                   : "bg-gray-800 text-gray-400 border-gray-700 hover:bg-gray-700 disabled:opacity-50"
               }`}
             >
@@ -503,7 +503,7 @@ export function MirageBettingPanel({
           <button
             onClick={handleAllIn}
             disabled={disabled}
-            className="px-3 py-1.5 text-[10px] font-medium bg-gray-800 text-pink-400 border-2 border-gray-700 hover:bg-gray-700 disabled:opacity-50"
+            className="px-3 py-1.5 text-[10px] font-medium bg-gray-800 text-white border-2 border-gray-700 hover:bg-gray-700 disabled:opacity-50"
           >
             ALL IN
           </button>
@@ -517,7 +517,7 @@ export function MirageBettingPanel({
         {/* Place bet button */}
         <button
           onClick={disabled ? onLoginClick : handlePlaceBet}
-          className="w-full py-4 bg-pink-500 hover:bg-pink-400 text-white font-bold text-xs pixel-btn border-pink-700 transition-all"
+          className="w-full py-4 bg-gray-600 hover:bg-gray-500 text-white font-bold text-xs pixel-btn border-gray-700 transition-all"
         >
           {disabled ? "SIGN IN TO BET" : "PLACE BET"}
         </button>
@@ -617,7 +617,7 @@ export function MirageBettingPanel({
 
             <div className="bg-gray-900/50 border-2 border-gray-700 p-3 mb-4">
               <div className="flex justify-center text-[10px]">
-                <span className="text-yellow-400 font-semibold">
+                <span className="text-white font-semibold">
                   {formatCurrency(amount)}
                 </span>
               </div>
@@ -626,7 +626,7 @@ export function MirageBettingPanel({
             <button
               onClick={handlePopupPlaceBet}
               disabled={!popupPrediction}
-              className="w-full py-4 bg-pink-500 hover:bg-pink-400 text-white font-bold text-xs pixel-btn border-pink-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-gray-600 hover:bg-gray-500 text-white font-bold text-xs pixel-btn border-gray-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               PLACE BET
             </button>

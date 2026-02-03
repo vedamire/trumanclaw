@@ -6,7 +6,7 @@ export function MirageSubject() {
   return (
     <div className="relative w-[95%] sm:w-[85%] md:w-[80%] mx-auto">
       {/* Blocky glow effect */}
-      <div className="absolute inset-0 bg-pink-600/20 blur-2xl" />
+      <div className="absolute inset-0 bg-white/10 blur-2xl" />
 
       <div className="relative pixel-panel p-4 sm:p-6 md:p-8">
         {/* Subject image */}
@@ -25,7 +25,7 @@ export function MirageSubject() {
 
         {/* Question text */}
         <p
-          className="text-pink-400 text-3xl sm:text-4xl md:text-5xl mt-4 sm:mt-6 text-center font-medium"
+          className="text-white text-3xl sm:text-4xl md:text-5xl mt-4 sm:mt-6 text-center font-medium"
           style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}
         >
           Will she survive next 24h?

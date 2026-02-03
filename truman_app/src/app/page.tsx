@@ -812,7 +812,7 @@ export default function GrimMarket() {
                 <p className="text-gray-400 text-sm mb-4">Sign in to place bets</p>
                 <button
                   onClick={() => setShowAuthModal(true)}
-                  className="px-6 py-3 bg-orange-500 hover:bg-orange-400 text-white font-bold text-xs pixel-btn border-orange-700 transition-all"
+                  className="px-6 py-3 bg-gray-600 hover:bg-gray-500 text-white font-bold text-xs pixel-btn border-gray-700 transition-all"
                 >
                   SIGN IN TO BET
                 </button>
@@ -835,19 +835,19 @@ export default function GrimMarket() {
             <h3 className="text-xs font-semibold text-gray-400 mb-6 uppercase tracking-wider">How It Works</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-orange-500">1</div>
+                <div className="text-xl mb-2 text-white">1</div>
                 <p className="text-gray-400 text-[10px] leading-relaxed">
                   Watch the plane and bet $100: Will it CRASH or LAND?
                 </p>
               </div>
               <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-orange-500">2</div>
+                <div className="text-xl mb-2 text-white">2</div>
                 <p className="text-gray-400 text-[10px] leading-relaxed">
                   Click your prediction and watch the conclusion play out
                 </p>
               </div>
               <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-orange-500">3</div>
+                <div className="text-xl mb-2 text-white">3</div>
                 <p className="text-gray-400 text-[10px] leading-relaxed">
                   Win 2x ($200) if you guess correctly!
                 </p>
@@ -885,7 +885,7 @@ export default function GrimMarket() {
                 <p className="text-gray-400 text-sm mb-4">Sign in to place bets</p>
                 <button
                   onClick={() => setShowAuthModal(true)}
-                  className="px-6 py-3 bg-orange-500 hover:bg-orange-400 text-white font-bold text-xs pixel-btn border-orange-700 transition-all"
+                  className="px-6 py-3 bg-gray-600 hover:bg-gray-500 text-white font-bold text-xs pixel-btn border-gray-700 transition-all"
                 >
                   SIGN IN TO BET
                 </button>
@@ -908,19 +908,19 @@ export default function GrimMarket() {
             <h3 className="text-xs font-semibold text-gray-400 mb-6 uppercase tracking-wider">How It Works</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-orange-500">1</div>
+                <div className="text-xl mb-2 text-white">1</div>
                 <p className="text-gray-400 text-[10px] leading-relaxed">
                   Watch the boat and bet $100: Will the missile HIT or MISS?
                 </p>
               </div>
               <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-orange-500">2</div>
+                <div className="text-xl mb-2 text-white">2</div>
                 <p className="text-gray-400 text-[10px] leading-relaxed">
                   Click your prediction and watch the conclusion play out
                 </p>
               </div>
               <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-orange-500">3</div>
+                <div className="text-xl mb-2 text-white">3</div>
                 <p className="text-gray-400 text-[10px] leading-relaxed">
                   Win 2x ($200) if you guess correctly!
                 </p>
@@ -995,7 +995,7 @@ export default function GrimMarket() {
                 <p className="text-gray-400 text-sm mb-4">Sign in to place bets</p>
                 <button
                   onClick={() => setShowAuthModal(true)}
-                  className="px-6 py-3 bg-purple-500 hover:bg-purple-400 text-white font-bold text-xs pixel-btn border-purple-700 transition-all"
+                  className="px-6 py-3 bg-gray-600 hover:bg-gray-500 text-white font-bold text-xs pixel-btn border-gray-700 transition-all"
                 >
                   SIGN IN TO BET
                 </button>
@@ -1018,19 +1018,19 @@ export default function GrimMarket() {
             <h3 className="text-xs font-semibold text-gray-400 mb-6 uppercase tracking-wider">How It Works</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-purple-500">1</div>
+                <div className="text-xl mb-2 text-white">1</div>
                 <p className="text-gray-400 text-[10px] leading-relaxed">
                   Cycle through 3 games: Car Stunt → Plane → Boat
                 </p>
               </div>
               <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-purple-500">2</div>
+                <div className="text-xl mb-2 text-white">2</div>
                 <p className="text-gray-400 text-[10px] leading-relaxed">
                   Bet $100 on each outcome and watch results
                 </p>
               </div>
               <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-purple-500">3</div>
+                <div className="text-xl mb-2 text-white">3</div>
                 <p className="text-gray-400 text-[10px] leading-relaxed">
                   Win 2x ($200) if you guess correctly!
                 </p>
@@ -1068,7 +1068,7 @@ export default function GrimMarket() {
                 <p className="text-gray-400 text-sm mb-4">Sign in to place bets</p>
                 <button
                   onClick={() => setShowAuthModal(true)}
-                  className="px-6 py-3 bg-pink-500 hover:bg-pink-400 text-white font-bold text-xs pixel-btn border-pink-700 transition-all"
+                  className="px-6 py-3 bg-gray-600 hover:bg-gray-500 text-white font-bold text-xs pixel-btn border-gray-700 transition-all"
                 >
                   SIGN IN TO BET
                 </button>
@@ -1091,19 +1091,19 @@ export default function GrimMarket() {
             <h3 className="text-xs font-semibold text-gray-400 mb-6 uppercase tracking-wider">How It Works</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-pink-500">1</div>
+                <div className="text-xl mb-2 text-white">1</div>
                 <p className="text-gray-400 text-[10px] leading-relaxed">
                   Watch the video and bet $100: BUSH or SHAVED?
                 </p>
               </div>
               <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-pink-500">2</div>
+                <div className="text-xl mb-2 text-white">2</div>
                 <p className="text-gray-400 text-[10px] leading-relaxed">
                   Click your prediction and watch the conclusion play out
                 </p>
               </div>
               <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-pink-500">3</div>
+                <div className="text-xl mb-2 text-white">3</div>
                 <p className="text-gray-400 text-[10px] leading-relaxed">
                   Win 2x ($200) if you guess correctly!
                 </p>
@@ -1144,7 +1144,7 @@ export default function GrimMarket() {
                 <p className="text-gray-400 text-sm mb-4">Sign in to place bets</p>
                 <button
                   onClick={() => setShowAuthModal(true)}
-                  className="px-6 py-3 bg-green-500 hover:bg-green-400 text-white font-bold text-xs pixel-btn border-green-700 transition-all"
+                  className="px-6 py-3 bg-gray-600 hover:bg-gray-500 text-white font-bold text-xs pixel-btn border-gray-700 transition-all"
                 >
                   SIGN IN TO BET
                 </button>
@@ -1213,7 +1213,7 @@ export default function GrimMarket() {
                 <p className="text-gray-400 text-sm mb-4">Sign in to place bets</p>
                 <button
                   onClick={() => setShowAuthModal(true)}
-                  className="px-6 py-3 bg-blue-500 hover:bg-blue-400 text-white font-bold text-xs pixel-btn border-blue-700 transition-all"
+                  className="px-6 py-3 bg-gray-600 hover:bg-gray-500 text-white font-bold text-xs pixel-btn border-gray-700 transition-all"
                 >
                   SIGN IN TO BET
                 </button>
@@ -1236,19 +1236,19 @@ export default function GrimMarket() {
             <h3 className="text-xs font-semibold text-gray-400 mb-6 uppercase tracking-wider">How It Works</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-blue-500">1</div>
+                <div className="text-xl mb-2 text-white">1</div>
                 <p className="text-gray-400 text-[10px] leading-relaxed">
                   Watch the race and bet $100 on who wins: 5ft on Lambo or 6.5ft on Toyota
                 </p>
               </div>
               <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-blue-500">2</div>
+                <div className="text-xl mb-2 text-white">2</div>
                 <p className="text-gray-400 text-[10px] leading-relaxed">
                   Click your prediction and watch the conclusion play out
                 </p>
               </div>
               <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-blue-500">3</div>
+                <div className="text-xl mb-2 text-white">3</div>
                 <p className="text-gray-400 text-[10px] leading-relaxed">
                   Win 2x ($200) if you guess correctly!
                 </p>
@@ -1292,25 +1292,25 @@ export default function GrimMarket() {
             <h3 className="text-xs font-semibold text-gray-400 mb-6 uppercase tracking-wider">How It Works</h3>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-pink-500">1</div>
+                <div className="text-xl mb-2 text-white">1</div>
                 <p className="text-gray-400 text-[10px] leading-relaxed">
                   Watch the video and predict: Wife, Mom, or $90M?
                 </p>
               </div>
               <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-pink-500">2</div>
+                <div className="text-xl mb-2 text-white">2</div>
                 <p className="text-gray-400 text-[10px] leading-relaxed">
                   Place your bet and watch the conclusion
                 </p>
               </div>
               <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-pink-500">3</div>
+                <div className="text-xl mb-2 text-white">3</div>
                 <p className="text-gray-400 text-[10px] leading-relaxed">
                   Win 2x if you guess correctly!
                 </p>
               </div>
               <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-green-500">4</div>
+                <div className="text-xl mb-2 text-white">4</div>
                 <p className="text-gray-400 text-[10px] leading-relaxed">
                   Download & post to earn $100 bonus!
                 </p>
@@ -1353,19 +1353,19 @@ export default function GrimMarket() {
               <h3 className="text-xs font-semibold text-gray-400 mb-6 uppercase tracking-wider">How It Works</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="pixel-panel-dark p-4">
-                  <div className="text-xl mb-2 text-pink-500">1</div>
+                  <div className="text-xl mb-2 text-white">1</div>
                   <p className="text-gray-400 text-[10px] leading-relaxed">
                     Watch the video and predict: Will he save his Wife, Mom, or take the $90 Million?
                   </p>
                 </div>
                 <div className="pixel-panel-dark p-4">
-                  <div className="text-xl mb-2 text-pink-500">2</div>
+                  <div className="text-xl mb-2 text-white">2</div>
                   <p className="text-gray-400 text-[10px] leading-relaxed">
                     Place your bet and watch the conclusion video play out
                   </p>
                 </div>
                 <div className="pixel-panel-dark p-4">
-                  <div className="text-xl mb-2 text-pink-500">3</div>
+                  <div className="text-xl mb-2 text-white">3</div>
                   <p className="text-gray-400 text-[10px] leading-relaxed">
                     Win 2x if you guess correctly!
                   </p>
@@ -1397,19 +1397,19 @@ export default function GrimMarket() {
               <h3 className="text-xs font-semibold text-gray-400 mb-6 uppercase tracking-wider">How It Works</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="pixel-panel-dark p-4">
-                  <div className="text-xl mb-2 text-pink-500">1</div>
+                  <div className="text-xl mb-2 text-white">1</div>
                   <p className="text-gray-400 text-[10px] leading-relaxed">
                     View the subject
                   </p>
                 </div>
                 <div className="pixel-panel-dark p-4">
-                  <div className="text-xl mb-2 text-pink-500">2</div>
+                  <div className="text-xl mb-2 text-white">2</div>
                   <p className="text-gray-400 text-[10px] leading-relaxed">
                     Bet Survives or Dies — resolves in 3 days
                   </p>
                 </div>
                 <div className="pixel-panel-dark p-4">
-                  <div className="text-xl mb-2 text-pink-500">3</div>
+                  <div className="text-xl mb-2 text-white">3</div>
                   <p className="text-gray-400 text-[10px] leading-relaxed">
                     Win 2x if correct
                   </p>
@@ -1504,7 +1504,7 @@ function SkullLoader() {
   return (
     <div className="animate-pulse">
       <svg
-        className="w-16 h-16 mx-auto text-red-600"
+        className="w-16 h-16 mx-auto text-white"
         viewBox="0 0 24 24"
         fill="currentColor"
       >

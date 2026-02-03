@@ -60,13 +60,13 @@ export function Mirage4Subject({
               onClick={() => onPlaceBet("lambo")}
               disabled={disabled}
               className={`absolute left-2 sm:left-4 top-[calc(50%+200px)] -translate-y-1/2 px-3 sm:px-6 py-3 sm:py-4
-                bg-orange-600/90 hover:bg-orange-500 text-white font-bold text-xs sm:text-sm
-                pixel-btn border-orange-800 transition-all shadow-lg
+                bg-gray-700/90 hover:bg-gray-600 text-white font-bold text-xs sm:text-sm
+                pixel-btn border-gray-800 transition-all shadow-lg
                 ${disabled ? "opacity-50 cursor-not-allowed" : "hover:scale-105"}
               `}
             >
               <div className="text-center">
-                <span className="block text-yellow-300 text-lg sm:text-xl font-black">$100</span>
+                <span className="block text-white text-lg sm:text-xl font-black">$100</span>
                 <span className="block text-[10px] sm:text-xs mt-1">5ft on LAMBO</span>
               </div>
             </button>
@@ -76,13 +76,13 @@ export function Mirage4Subject({
               onClick={() => onPlaceBet("toyota")}
               disabled={disabled}
               className={`absolute right-2 sm:right-4 top-[calc(50%+200px)] -translate-y-1/2 px-3 sm:px-6 py-3 sm:py-4
-                bg-blue-600/90 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm
-                pixel-btn border-blue-800 transition-all shadow-lg
+                bg-gray-600/90 hover:bg-gray-500 text-white font-bold text-xs sm:text-sm
+                pixel-btn border-gray-700 transition-all shadow-lg
                 ${disabled ? "opacity-50 cursor-not-allowed" : "hover:scale-105"}
               `}
             >
               <div className="text-center">
-                <span className="block text-yellow-300 text-lg sm:text-xl font-black">$100</span>
+                <span className="block text-white text-lg sm:text-xl font-black">$100</span>
                 <span className="block text-[10px] sm:text-xs mt-1">6.5ft on TOYOTA</span>
               </div>
             </button>
@@ -92,11 +92,7 @@ export function Mirage4Subject({
         {/* Current bet indicator during conclusion phase */}
         {phase === "conclusion" && currentBet && (
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
-            <div className={`px-6 py-3 border-2 animate-pulse ${
-              currentBet.prediction === "lambo"
-                ? "bg-orange-900/80 border-orange-500"
-                : "bg-blue-900/80 border-blue-500"
-            }`}>
+            <div className="px-6 py-3 border-2 animate-pulse bg-gray-800/80 border-gray-500">
               <span className="text-white font-bold text-sm sm:text-base">
                 YOUR BET: $100 on {currentBet.prediction === "lambo" ? "5ft LAMBO" : "6.5ft TOYOTA"}
               </span>

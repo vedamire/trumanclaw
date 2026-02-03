@@ -120,7 +120,7 @@ export function Mirage3BettingPanel({
             download="result_tiktok.mp4"
             className="inline-flex items-center gap-3 px-6 py-4 bg-gray-800 hover:bg-gray-700 border-2 border-gray-600 transition-all"
           >
-            <DownloadIcon className="w-6 h-6 text-pink-400" />
+            <DownloadIcon className="w-6 h-6 text-white" />
             <div className="text-left">
               <p className="text-white font-semibold">DOWNLOAD VIDEO</p>
               <p className="text-gray-400 text-xs">result_tiktok.mp4</p>
@@ -132,14 +132,14 @@ export function Mirage3BettingPanel({
         <div className="border-t-2 border-gray-700" />
 
         {/* Bonus message */}
-        <p className="text-center text-pink-400 text-lg font-semibold">
+        <p className="text-center text-white text-lg font-semibold">
           Post this video to earn $100 bonus!
         </p>
 
         {/* Posted button */}
         <button
           onClick={onPosted}
-          className="w-full py-5 bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-400 hover:to-purple-400 text-white font-bold text-lg pixel-btn border-pink-700 transition-all animate-pulse"
+          className="w-full py-5 bg-gray-600 hover:bg-gray-500 text-white font-bold text-lg pixel-btn border-gray-700 transition-all animate-pulse"
         >
           I POSTED IT!
         </button>
@@ -155,8 +155,8 @@ export function Mirage3BettingPanel({
           <div className="p-4 flex items-center gap-3 border-b-2 border-gray-700/50">
             <div className="relative">
               <span className="flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full bg-pink-400 opacity-75"></span>
-                <span className="relative inline-flex h-3 w-3 bg-pink-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full bg-white opacity-75"></span>
+                <span className="relative inline-flex h-3 w-3 bg-white"></span>
               </span>
             </div>
             <h3 className="text-xs font-semibold text-gray-300 uppercase">
@@ -190,25 +190,13 @@ export function Mirage3BettingPanel({
 
           {/* Show current bet during video */}
           {!showResult && (
-            <div className={`px-6 py-5 flex items-center gap-4 border-2 animate-pulse-border ${
-              currentBet.prediction === "mom"
-                ? "border-purple-500 bg-purple-900/30 shadow-[0_0_20px_rgba(168,85,247,0.5)]"
-                : currentBet.prediction === "wife"
-                  ? "border-pink-500 bg-pink-900/30 shadow-[0_0_20px_rgba(236,72,153,0.5)]"
-                  : "border-yellow-500 bg-yellow-900/30 shadow-[0_0_20px_rgba(234,179,8,0.5)]"
-            }`}>
+            <div className={`px-6 py-5 flex items-center gap-4 border-2 animate-pulse-border border-gray-500 bg-gray-800/30 shadow-[0_0_20px_rgba(255,255,255,0.3)]`}>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-3">
-                  <span className={`px-3 py-1 text-sm font-bold ${
-                    currentBet.prediction === "mom"
-                      ? "bg-purple-600/20 text-purple-400 border border-purple-600/30"
-                      : currentBet.prediction === "wife"
-                        ? "bg-pink-600/20 text-pink-400 border border-pink-600/30"
-                        : "bg-yellow-600/20 text-yellow-400 border border-yellow-600/30"
-                  }`}>
+                  <span className="px-3 py-1 text-sm font-bold bg-gray-600/20 text-white border border-gray-600/30">
                     {currentBet.prediction === "mom" ? "MOM" : currentBet.prediction === "wife" ? "WIFE" : "$90 MILLION"}
                   </span>
-                  <span className="px-3 py-1 text-sm font-semibold bg-pink-600/20 text-pink-400 border border-pink-600/30">
+                  <span className="px-3 py-1 text-sm font-semibold bg-gray-600/20 text-white border border-gray-600/30">
                     PENDING
                   </span>
                 </div>
@@ -217,7 +205,7 @@ export function Mirage3BettingPanel({
                 </div>
               </div>
               <div className="text-right flex-shrink-0">
-                <p className="text-yellow-400 text-lg font-semibold">
+                <p className="text-white text-lg font-semibold">
                   {formatCurrency(currentBet.amount)}
                 </p>
               </div>
@@ -236,8 +224,8 @@ export function Mirage3BettingPanel({
               disabled={isInActivePhase}
               className={`relative py-5 pixel-btn font-bold text-base transition-all ${
                 selectedPrediction === "wife"
-                  ? "bg-pink-600 text-white border-pink-800"
-                  : "bg-pink-600/10 text-pink-500 border-pink-600/50 hover:bg-pink-600/20"
+                  ? "bg-gray-600 text-white border-gray-800"
+                  : "bg-gray-600/10 text-white border-gray-600/50 hover:bg-gray-600/20"
               } ${(disabled || isInActivePhase) ? "opacity-50 cursor-not-allowed" : ""}`}
             >
               <HeartIcon className="w-7 h-7 mx-auto mb-1" />
@@ -248,8 +236,8 @@ export function Mirage3BettingPanel({
               disabled={isInActivePhase}
               className={`relative py-5 pixel-btn font-bold text-base transition-all ${
                 selectedPrediction === "mom"
-                  ? "bg-purple-600 text-white border-purple-800"
-                  : "bg-purple-600/10 text-purple-500 border-purple-600/50 hover:bg-purple-600/20"
+                  ? "bg-gray-600 text-white border-gray-800"
+                  : "bg-gray-600/10 text-white border-gray-600/50 hover:bg-gray-600/20"
               } ${(disabled || isInActivePhase) ? "opacity-50 cursor-not-allowed" : ""}`}
             >
               <HeartIcon className="w-7 h-7 mx-auto mb-1" />
@@ -260,8 +248,8 @@ export function Mirage3BettingPanel({
               disabled={isInActivePhase}
               className={`relative py-5 pixel-btn font-bold text-base transition-all ${
                 selectedPrediction === "money"
-                  ? "bg-yellow-600 text-white border-yellow-800"
-                  : "bg-yellow-600/10 text-yellow-500 border-yellow-600/50 hover:bg-yellow-600/20"
+                  ? "bg-gray-600 text-white border-gray-800"
+                  : "bg-gray-600/10 text-white border-gray-600/50 hover:bg-gray-600/20"
               } ${(disabled || isInActivePhase) ? "opacity-50 cursor-not-allowed" : ""}`}
             >
               <DollarIcon className="w-7 h-7 mx-auto mb-1" />
@@ -280,7 +268,7 @@ export function Mirage3BettingPanel({
                 disabled={disabled || isInActivePhase}
                 min={1}
                 max={balance}
-                className="w-full pixel-input py-3 pl-8 pr-4 text-white text-sm focus:outline-none focus:border-pink-500/50 disabled:opacity-50"
+                className="w-full pixel-input py-3 pl-8 pr-4 text-white text-sm focus:outline-none focus:border-white/50 disabled:opacity-50"
               />
             </div>
           </div>
@@ -294,7 +282,7 @@ export function Mirage3BettingPanel({
                 disabled={disabled || isInActivePhase || preset > balance}
                 className={`px-3 py-1.5 text-[10px] font-medium transition-colors border-2 ${
                   amount === preset
-                    ? "bg-pink-500/20 text-pink-400 border-pink-500/50"
+                    ? "bg-white/20 text-white border-white/50"
                     : "bg-gray-800 text-gray-400 border-gray-700 hover:bg-gray-700 disabled:opacity-50"
                 }`}
               >
@@ -304,7 +292,7 @@ export function Mirage3BettingPanel({
             <button
               onClick={handleAllIn}
               disabled={disabled || isInActivePhase}
-              className="px-3 py-1.5 text-[10px] font-medium bg-gray-800 text-pink-400 border-2 border-gray-700 hover:bg-gray-700 disabled:opacity-50"
+              className="px-3 py-1.5 text-[10px] font-medium bg-gray-800 text-white border-2 border-gray-700 hover:bg-gray-700 disabled:opacity-50"
             >
               ALL IN
             </button>
@@ -319,7 +307,7 @@ export function Mirage3BettingPanel({
           <button
             onClick={disabled ? onLoginClick : handlePlaceBet}
             disabled={isInActivePhase}
-            className="w-full py-4 bg-pink-500 hover:bg-pink-400 text-white font-bold text-xs pixel-btn border-pink-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-4 bg-gray-600 hover:bg-gray-500 text-white font-bold text-xs pixel-btn border-gray-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {disabled ? "SIGN IN TO BET" : "PLACE BET"}
           </button>

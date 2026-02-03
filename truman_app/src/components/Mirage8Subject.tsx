@@ -65,8 +65,8 @@ export function Mirage8Subject({
               onClick={() => onPlaceBet("hit")}
               disabled={disabled}
               className={`absolute left-2 sm:left-4 top-[calc(50%+550px)] -translate-y-1/2 px-9 sm:px-16 py-9 sm:py-12
-                bg-red-600/90 hover:bg-red-500 text-white font-bold
-                pixel-btn border-red-800 transition-all shadow-lg
+                bg-gray-700/90 hover:bg-gray-600 text-white font-bold
+                pixel-btn border-gray-800 transition-all shadow-lg
                 ${disabled ? "opacity-50 cursor-not-allowed" : "hover:scale-105"}
               `}
             >
@@ -78,8 +78,8 @@ export function Mirage8Subject({
               onClick={() => onPlaceBet("miss")}
               disabled={disabled}
               className={`absolute right-2 sm:right-4 top-[calc(50%+550px)] -translate-y-1/2 px-9 sm:px-16 py-9 sm:py-12
-                bg-green-600/90 hover:bg-green-500 text-white font-bold
-                pixel-btn border-green-800 transition-all shadow-lg
+                bg-gray-600/90 hover:bg-gray-500 text-white font-bold
+                pixel-btn border-gray-700 transition-all shadow-lg
                 ${disabled ? "opacity-50 cursor-not-allowed" : "hover:scale-105"}
               `}
             >
@@ -91,11 +91,7 @@ export function Mirage8Subject({
         {/* Current bet indicator during conclusion phase */}
         {phase === "conclusion" && currentBet && (
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
-            <div className={`px-6 py-3 border-2 animate-pulse ${
-              currentBet.prediction === "hit"
-                ? "bg-red-900/80 border-red-500"
-                : "bg-green-900/80 border-green-500"
-            }`}>
+            <div className="px-6 py-3 border-2 animate-pulse bg-gray-800/80 border-gray-500">
               <span className="text-white font-bold text-sm sm:text-base">
                 YOUR BET: $100 on {currentBet.prediction === "hit" ? "HIT" : "MISS"}
               </span>
