@@ -10,7 +10,7 @@ function ChoiceSelector() {
 
       <div className="choice-tab">
         <span className="choice-tab-label">I'm Agent</span>
-        <span className="choice-tab-subtitle">Enter the Simulation with Free Will</span>
+        <span className="choice-tab-subtitle">Enter the Simulation</span>
       </div>
     </div>
   )
