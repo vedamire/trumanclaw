@@ -70,37 +70,35 @@ export function Mirage7Subject({
               </div>
             )}
 
-            {/* Buttons at bottom - only during deciding phase */}
+            {/* Centered overlay - only during deciding phase */}
             {phase === "deciding" && (
-              <div className="tiktok-buttons">
-                <div className="text-center mb-4">
-                  <button
-                    onClick={onShowHelp}
-                    className="bg-black/70 px-6 py-2 rounded-lg text-white text-xl font-black hover:bg-black/80 transition-colors"
-                  >
-                    Crash or Land?
-                  </button>
-                </div>
-                <div className="flex gap-4">
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-6">
+                <button
+                  onClick={onShowHelp}
+                  className="bg-black/70 px-6 py-2 rounded-lg text-white text-xl font-black hover:bg-black/80 transition-colors"
+                >
+                  Crash or Land?
+                </button>
+                <div className="flex items-center gap-4 sm:gap-6">
                   <button
                     onClick={() => onPlaceBet("crash")}
                     disabled={disabled}
-                    className={`flex-1 py-5 bg-gray-700/90 hover:bg-gray-600 text-white font-bold
+                    className={`px-6 py-4 min-[400px]:px-10 min-[400px]:py-6 sm:px-16 sm:py-10 bg-gray-700/90 hover:bg-gray-600 text-white font-bold
                       pixel-btn border-gray-800 transition-all shadow-lg rounded-lg
                       ${disabled ? "opacity-50 cursor-not-allowed" : "hover:scale-105"}
                     `}
                   >
-                    <span className="text-2xl font-black">CRASH</span>
+                    <span className="text-xl min-[400px]:text-3xl sm:text-4xl font-black">CRASH</span>
                   </button>
                   <button
                     onClick={() => onPlaceBet("land")}
                     disabled={disabled}
-                    className={`flex-1 py-5 bg-gray-600/90 hover:bg-gray-500 text-white font-bold
+                    className={`px-6 py-4 min-[400px]:px-10 min-[400px]:py-6 sm:px-16 sm:py-10 bg-gray-600/90 hover:bg-gray-500 text-white font-bold
                       pixel-btn border-gray-700 transition-all shadow-lg rounded-lg
                       ${disabled ? "opacity-50 cursor-not-allowed" : "hover:scale-105"}
                     `}
                   >
-                    <span className="text-2xl font-black">LAND</span>
+                    <span className="text-xl min-[400px]:text-3xl sm:text-4xl font-black">LAND</span>
                   </button>
                 </div>
               </div>
@@ -159,38 +157,35 @@ export function Mirage7Subject({
 
         {/* Bet buttons overlay - only during deciding phase */}
         {phase === "deciding" && (
-          <>
-            {/* Question text above buttons */}
-            <div className="absolute left-1/2 -translate-x-1/2 top-1/2 bg-black/70 px-24 py-3 rounded-lg whitespace-nowrap">
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-6">
+            <div className="bg-black/70 px-12 sm:px-24 py-3 rounded-lg whitespace-nowrap">
               <span className="text-white text-4xl sm:text-6xl font-black">Crash or Land?</span>
             </div>
-
-            {/* Left button - CRASH */}
-            <button
-              onClick={() => onPlaceBet("crash")}
-              disabled={disabled}
-              className={`absolute left-2 sm:left-4 top-[calc(50%+200px)] -translate-y-1/2 px-9 sm:px-16 py-9 sm:py-12
-                bg-gray-700/90 hover:bg-gray-600 text-white font-bold
-                pixel-btn border-gray-800 transition-all shadow-lg
-                ${disabled ? "opacity-50 cursor-not-allowed" : "hover:scale-105"}
-              `}
-            >
-              <span className="text-3xl sm:text-5xl font-black">CRASH</span>
-            </button>
-
-            {/* Right button - LAND */}
-            <button
-              onClick={() => onPlaceBet("land")}
-              disabled={disabled}
-              className={`absolute right-2 sm:right-4 top-[calc(50%+200px)] -translate-y-1/2 px-9 sm:px-16 py-9 sm:py-12
-                bg-gray-600/90 hover:bg-gray-500 text-white font-bold
-                pixel-btn border-gray-700 transition-all shadow-lg
-                ${disabled ? "opacity-50 cursor-not-allowed" : "hover:scale-105"}
-              `}
-            >
-              <span className="text-3xl sm:text-5xl font-black">LAND</span>
-            </button>
-          </>
+            <div className="flex items-center gap-6">
+              <button
+                onClick={() => onPlaceBet("crash")}
+                disabled={disabled}
+                className={`px-9 sm:px-16 py-9 sm:py-12
+                  bg-gray-700/90 hover:bg-gray-600 text-white font-bold
+                  pixel-btn border-gray-800 transition-all shadow-lg
+                  ${disabled ? "opacity-50 cursor-not-allowed" : "hover:scale-105"}
+                `}
+              >
+                <span className="text-3xl sm:text-5xl font-black">CRASH</span>
+              </button>
+              <button
+                onClick={() => onPlaceBet("land")}
+                disabled={disabled}
+                className={`px-9 sm:px-16 py-9 sm:py-12
+                  bg-gray-600/90 hover:bg-gray-500 text-white font-bold
+                  pixel-btn border-gray-700 transition-all shadow-lg
+                  ${disabled ? "opacity-50 cursor-not-allowed" : "hover:scale-105"}
+                `}
+              >
+                <span className="text-3xl sm:text-5xl font-black">LAND</span>
+              </button>
+            </div>
+          </div>
         )}
 
         {/* Current bet indicator during conclusion phase */}
