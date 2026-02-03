@@ -116,14 +116,14 @@ export function Mirage3BettingPanel({
         {/* Download section */}
         <div className="text-center">
           <a
-            href="/videos/result_tiktok.mp4"
-            download="result_tiktok.mp4"
+            href="/videos/result_tiktok.webm"
+            download="result_tiktok.webm"
             className="inline-flex items-center gap-3 px-6 py-4 bg-gray-800 hover:bg-gray-700 border-2 border-gray-600 transition-all"
           >
             <DownloadIcon className="w-6 h-6 text-white" />
             <div className="text-left">
               <p className="text-white font-semibold">DOWNLOAD VIDEO</p>
-              <p className="text-gray-400 text-xs">result_tiktok.mp4</p>
+              <p className="text-gray-400 text-xs">result_tiktok.webm</p>
             </div>
           </a>
         </div>

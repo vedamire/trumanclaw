@@ -109,13 +109,11 @@ export function Mirage7Subject({
 
             {/* Current bet indicator during conclusion phase */}
             {phase === "conclusion" && currentBet && (
-              <div className="tiktok-buttons">
-                <div className="text-center">
-                  <div className="px-6 py-3 border-2 animate-pulse bg-gray-800/80 border-gray-500 rounded-lg inline-block">
-                    <span className="text-white font-bold text-sm sm:text-base">
-                      YOUR BET: $100 on {currentBet.prediction === "crash" ? "CRASH" : "LAND"}
-                    </span>
-                  </div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="px-6 py-3 border-2 animate-pulse bg-gray-800/80 border-gray-500 rounded-lg">
+                  <span className="text-white font-bold text-sm sm:text-base">
+                    YOUR BET: $100 on {currentBet.prediction === "crash" ? "CRASH" : "LAND"}
+                  </span>
                 </div>
               </div>
             )}

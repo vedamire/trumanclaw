@@ -64,29 +64,29 @@ const getNextMirage9Game = (current: Mirage9Game): Mirage9Game => {
 const MIRAGE_BET_DURATION = 3 * 24 * 60 * 60 * 1000;
 
 // Mirage2 video paths
-const DECIDING_VIDEO = "/videos/deciding_video.mp4";
-const CONCLUSION_VIDEO = "/videos/conclusion_video.mp4";
+const DECIDING_VIDEO = "/videos/deciding_video.webm";
+const CONCLUSION_VIDEO = "/videos/conclusion_video.webm";
 
 // Mirage4 video paths
-const MIRAGE4_BEGINNING_VIDEO = "/videos/mirage4_beginning.mp4";
-const MIRAGE4_CONCLUSION_VIDEO = "/videos/mirage4_conclusion.mp4";
+const MIRAGE4_BEGINNING_VIDEO = "/videos/mirage4_beginning.webm";
+const MIRAGE4_CONCLUSION_VIDEO = "/videos/mirage4_conclusion.webm";
 
 // Mirage5 video paths
-const MIRAGE5_BEGINNING_VIDEO = "/videos/mirage5_beginning.mp4";
-const MIRAGE5_CONCLUSION_VIDEO = "/videos/mirage5_conclusion.mp4";
-const MIRAGE5_CRASH_CONCLUSION_VIDEO = "/videos/mirage5_crash_conclusion.mp4";
+const MIRAGE5_BEGINNING_VIDEO = "/videos/mirage5_beginning.webm";
+const MIRAGE5_CONCLUSION_VIDEO = "/videos/mirage5_conclusion.webm";
+const MIRAGE5_CRASH_CONCLUSION_VIDEO = "/videos/mirage5_crash_conclusion.webm";
 
 // Mirage7 video paths
-const MIRAGE7_INTRO_VIDEO = "/videos/mirage7_intro.mp4";
-const MIRAGE7_CONCLUSION_VIDEO = "/videos/mirage7_conclusion.mp4";
+const MIRAGE7_INTRO_VIDEO = "/videos/mirage7_intro.webm";
+const MIRAGE7_CONCLUSION_VIDEO = "/videos/mirage7_conclusion.webm";
 
 // Mirage8 video paths
-const MIRAGE8_INTRO_VIDEO = "/videos/mirage8_intro.mp4";
-const MIRAGE8_CONCLUSION_VIDEO = "/videos/mirage8_conclusion.mp4";
+const MIRAGE8_INTRO_VIDEO = "/videos/mirage8_intro.webm";
+const MIRAGE8_CONCLUSION_VIDEO = "/videos/mirage8_conclusion.webm";
 
 // Mirage10 video paths
-const MIRAGE10_INTRO_VIDEO = "/videos/mirage10_intro.mp4";
-const MIRAGE10_CONCLUSION_VIDEO = "/videos/mirage10_conclusion.mp4";
+const MIRAGE10_INTRO_VIDEO = "/videos/mirage10_intro.webm";
+const MIRAGE10_CONCLUSION_VIDEO = "/videos/mirage10_conclusion.webm";
 
 export default function GrimMarket() {
   const [showAuthModal, setShowAuthModal] = useState(false);

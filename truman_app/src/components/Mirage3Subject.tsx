@@ -34,7 +34,7 @@ export function Mirage3Subject({ videoSrc, isLooping, onEnded, phase }: Mirage3S
           <div className="relative aspect-[4/3] w-full overflow-hidden bg-black flex items-center justify-center">
             <video
               ref={videoRef}
-              src="/videos/result_tiktok.mp4"
+              src="/videos/result_tiktok.webm"
               autoPlay
               loop
               muted
