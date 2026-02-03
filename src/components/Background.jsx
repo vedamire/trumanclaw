@@ -9,15 +9,17 @@ function Background() {
           alt=""
           className="background-image"
         />
-        <video
-          className="monitor-video"
-          autoPlay
-          loop
-          muted
-          playsInline
-        >
-          <source src="/videos/trumanshow_clip.mp4" type="video/mp4" />
-        </video>
+        <div className="monitor-video-wrapper">
+          <video
+            className="monitor-video"
+            autoPlay
+            loop
+            muted
+            playsInline
+          >
+            <source src="/videos/trumanshow_clip.mp4" type="video/mp4" />
+          </video>
+        </div>
       </div>
       <div className="background-overlay"></div>
       <div className="background-vignette"></div>
