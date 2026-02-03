@@ -177,6 +177,23 @@ export function Header({ user, onLoginClick, onLogoutClick, compact }: HeaderPro
           </div>
 
           <div className="flex items-center gap-2">
+            {/* Live Bets Feed */}
+            <div className="flex items-center gap-2 sm:gap-4 overflow-hidden">
+              {bets.map((bet, i) => (
+                <div
+                  key={i}
+                  className={`text-[6px] sm:text-[9px] flex items-baseline gap-x-0.5 sm:gap-x-1 ${bet.isGlitching ? 'glitch-bet' : ''}`}
+                >
+                  <span className="text-gray-500 truncate max-w-[55px] sm:max-w-[105px]">{bet.username}</span>
+                  <span className={`whitespace-nowrap ${bet.won ? 'text-green-600' : 'text-red-500'}`}>
+                    {bet.won ? 'PUMP' : 'RIP'}
+                    {bet.won ? '+' : '-'}${bet.amount.toLocaleString()}
+                  </span>
+                  <span className="text-gray-400 whitespace-nowrap">{bet.time}s</span>
+                </div>
+              ))}
+            </div>
+
             {user ? (
               <>
                 <div className="flex items-center gap-1 px-2 py-1 bg-gray-100 border border-gray-300 rounded">

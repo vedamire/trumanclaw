@@ -70,16 +70,6 @@ export function Mirage7Subject({
               </div>
             )}
 
-            {/* Help icon - top left */}
-            {onShowHelp && (
-              <button
-                onClick={onShowHelp}
-                className="tiktok-help w-10 h-10 bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center text-white text-lg font-bold hover:bg-black/80 transition-colors"
-              >
-                ?
-              </button>
-            )}
-
             {/* Buttons at bottom - only during deciding phase */}
             {phase === "deciding" && (
               <div className="tiktok-buttons">
