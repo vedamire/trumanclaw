@@ -53,56 +53,6 @@
   animation: underlineFadeIn 2s ease-out;
 }
 
-/* CTA Button */
-.cta-button {
-  font-family: var(--font-body);
-  font-size: 1.1rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text-primary);
-  background: transparent;
-  border: 1px solid var(--border-color);
-  padding: 1rem 2.5rem;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s ease;
-  animation: buttonFadeIn 2s ease-out;
-}
-
-.cta-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(77, 166, 255, 0.1),
-    transparent
-  );
-  transition: left 0.5s ease;
-}
-
-.cta-button:hover {
-  border-color: var(--accent-blue);
-  color: var(--accent-blue);
-  box-shadow:
-    0 0 20px var(--accent-glow),
-    inset 0 0 20px rgba(77, 166, 255, 0.05);
-}
-
-.cta-button:hover::before {
-  left: 100%;
-}
-
-.cta-button:active {
-  transform: scale(0.98);
-}
-
 /* Animations */
 @keyframes titleFadeIn {
   0% {
@@ -132,30 +82,10 @@
   }
 }
 
-@keyframes buttonFadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  60% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* Responsive */
 @media (max-width: 768px) {
   .title {
     letter-spacing: 0.15em;
-  }
-
-  .cta-button {
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
   }
 }
 
@@ -166,10 +96,5 @@
 
   .title {
     letter-spacing: 0.1em;
-  }
-
-  .cta-button {
-    padding: 0.7rem 1.5rem;
-    font-size: 0.9rem;
   }
 }

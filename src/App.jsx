@@ -1,4 +1,6 @@
 import Background from './components/Background'
+import ChoiceSelector from './components/ChoiceSelector'
+import SimStats from './components/SimStats'
 import './App.css'
 
 function App() {
@@ -12,9 +14,9 @@ function App() {
           <div className="title-underline"></div>
         </div>
 
-        <button className="cta-button">
-          Enter Trumanclaw
-        </button>
+        <SimStats />
+
+        <ChoiceSelector />
       </main>
     </div>
   )
