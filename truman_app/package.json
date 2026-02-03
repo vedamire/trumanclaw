@@ -1,0 +1,36 @@
+{
+  "name": "grim-market",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "mirage": "NEXT_PUBLIC_APP_MODE=mirage next dev --turbopack",
+    "mirage2": "NEXT_PUBLIC_APP_MODE=mirage2 next dev --turbopack",
+    "mirage3": "NEXT_PUBLIC_APP_MODE=mirage3 next dev --turbopack",
+    "mirage4": "NEXT_PUBLIC_APP_MODE=mirage4 next dev --turbopack",
+    "mirage5": "NEXT_PUBLIC_APP_MODE=mirage5 next dev --turbopack",
+    "mirage7": "NEXT_PUBLIC_APP_MODE=mirage7 next dev --turbopack",
+    "mirage8": "NEXT_PUBLIC_APP_MODE=mirage8 next dev --turbopack",
+    "mirage9": "NEXT_PUBLIC_APP_MODE=mirage9 next dev --turbopack",
+    "mirage10": "NEXT_PUBLIC_APP_MODE=mirage10 next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@instantdb/react": "latest",
+    "@instantdb/admin": "latest",
+    "next": "15.4.10",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "tailwindcss": "^4",
+    "typescript": "^5.9.3"
+  },
+  "packageManager": "npm@11.6.0"
+}

@@ -1,0 +1,148 @@
+.sim-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  animation: statsFadeIn 2.5s ease-out backwards;
+}
+
+.sim-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.sim-stat-label {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.sim-stat-value {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #ffffff;
+  min-width: 3ch;
+  text-align: center;
+}
+
+@keyframes statsFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  70% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+    text-shadow: none;
+    clip-path: none;
+  }
+  10% {
+    transform: translate(-2px, 1px);
+    text-shadow:
+      2px 0 #ff0040,
+      -2px 0 #00ffff;
+  }
+  20% {
+    transform: translate(2px, -1px);
+    text-shadow:
+      -2px 0 #ff0040,
+      2px 0 #00ffff;
+    clip-path: inset(20% 0 40% 0);
+  }
+  30% {
+    transform: translate(-1px, 2px) skewX(-2deg);
+    text-shadow:
+      1px 0 #ff0040,
+      -1px 0 #00ffff;
+  }
+  40% {
+    transform: translate(1px, -1px);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-2px, 0) skewX(1deg);
+    text-shadow:
+      2px 0 #ff0040,
+      -2px 0 #00ffff;
+    clip-path: inset(60% 0 10% 0);
+  }
+  60% {
+    transform: translate(2px, 1px);
+    opacity: 1;
+  }
+  70% {
+    transform: translate(0, -2px);
+    text-shadow:
+      -1px 0 #ff0040,
+      1px 0 #00ffff;
+  }
+  80% {
+    transform: translate(-1px, 0) skewX(-1deg);
+    clip-path: none;
+  }
+  90% {
+    transform: translate(1px, 1px);
+    text-shadow:
+      1px 0 #ff0040,
+      -1px 0 #00ffff;
+  }
+  100% {
+    transform: translate(0);
+    text-shadow: none;
+    clip-path: none;
+  }
+}
+
+.sim-stat-item.glitching .sim-stat-value {
+  animation: glitch 0.4s ease-in-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sim-stats {
+    gap: 1.5rem;
+  }
+
+  .sim-stat-label {
+    font-size: 0.75rem;
+  }
+
+  .sim-stat-value {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sim-stats {
+    gap: 1rem;
+  }
+
+  .sim-stat-item {
+    gap: 0.25rem;
+  }
+
+  .sim-stat-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+  }
+
+  .sim-stat-value {
+    font-size: 1rem;
+  }
+}
