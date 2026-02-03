@@ -18,7 +18,7 @@ import { Mirage7Subject, type Mirage7Prediction } from "@/components/Mirage7Subj
 import { Mirage8Subject, type Mirage8Prediction } from "@/components/Mirage8Subject";
 import { Mirage10Subject, type Mirage10Prediction } from "@/components/Mirage10Subject";
 import { AuthModal } from "@/components/AuthModal";
-import { FallingSkulls } from "@/components/FallingSkulls";
+import { FallingTVs } from "@/components/FallingTVs";
 import {
   getTodayDate,
   getYesterdayDate,
@@ -774,8 +774,8 @@ export default function GrimMarket() {
       {/* Background overlay for readability */}
       <div className="fixed inset-0 bg-black/40 pointer-events-none" />
 
-      {/* Falling skulls animation */}
-      <FallingSkulls />
+      {/* Falling TVs animation */}
+      <FallingTVs />
 
       {/* Header */}
       <Header

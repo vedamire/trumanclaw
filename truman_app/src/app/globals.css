@@ -45,15 +45,15 @@
 }
 
 .pixel-panel-red {
-  background: linear-gradient(180deg, #3d1a1a 0%, #1f0a0a 100%);
-  border: 4px solid #6a3535;
+  background: linear-gradient(180deg, #4a4a4a 0%, #2a2a2a 100%);
+  border: 4px solid #cccccc;
   box-shadow:
-    inset 2px 2px 0 #6a3535,
-    inset -2px -2px 0 #0a0505,
+    inset 2px 2px 0 #cccccc,
+    inset -2px -2px 0 #1a1a1a,
     6px 6px 0 #000,
     0 0 50px rgba(0, 0, 0, 0.9),
-    0 0 80px rgba(139, 0, 0, 0.3),
-    0 0 120px rgba(139, 0, 0, 0.15);
+    0 0 80px rgba(255, 255, 255, 0.1),
+    0 0 120px rgba(255, 255, 255, 0.05);
   image-rendering: pixelated;
   backdrop-filter: blur(12px);
 }
@@ -87,8 +87,8 @@
 body {
   background-color: var(--background);
   background-image:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.6) 100%),
-    url('/logo/grim_app_background.jpg');
+    linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.7) 100%),
+    url('/backgrounds/super_truman_background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -130,13 +130,13 @@ input[type="number"] {
 
 /* Selection colors */
 ::selection {
-  background: rgba(220, 38, 38, 0.3);
+  background: rgba(255, 255, 255, 0.3);
   color: #fff;
 }
 
 /* Focus ring styles */
 *:focus-visible {
-  outline: 2px solid rgba(220, 38, 38, 0.5);
+  outline: 2px solid rgba(255, 255, 255, 0.5);
   outline-offset: 2px;
 }
 
@@ -163,15 +163,15 @@ button {
 
 /* Glow effect for important elements */
 .glow-red {
-  box-shadow: 0 0 20px rgba(220, 38, 38, 0.3),
-              0 0 40px rgba(220, 38, 38, 0.2),
-              0 0 60px rgba(220, 38, 38, 0.1);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
+              0 0 40px rgba(255, 255, 255, 0.2),
+              0 0 60px rgba(255, 255, 255, 0.1);
 }
 
 .glow-yellow {
-  box-shadow: 0 0 20px rgba(234, 179, 8, 0.3),
-              0 0 40px rgba(234, 179, 8, 0.2),
-              0 0 60px rgba(234, 179, 8, 0.1);
+  box-shadow: 0 0 20px rgba(200, 200, 200, 0.3),
+              0 0 40px rgba(200, 200, 200, 0.2),
+              0 0 60px rgba(200, 200, 200, 0.1);
 }
 
 /* Skeleton loading animation */
@@ -234,13 +234,13 @@ button {
 
 .glitch-number.glitch::before {
   animation: glitch-left 0.2s ease-in-out;
-  color: #ff0000;
+  color: #ffffff;
   clip-path: inset(0 50% 0 0);
 }
 
 .glitch-number.glitch::after {
   animation: glitch-right 0.2s ease-in-out;
-  color: #8b0000;
+  color: #808080;
   clip-path: inset(0 0 0 50%);
 }
 
@@ -312,8 +312,8 @@ button {
   }
 }
 
-/* Falling skulls animation */
-@keyframes skullFall {
+/* Falling TVs animation */
+@keyframes tvFall {
   0% {
     top: -60px;
     opacity: 0;
@@ -330,8 +330,8 @@ button {
   }
 }
 
-.skull-fall {
-  animation-name: skullFall;
+.tv-fall {
+  animation-name: tvFall;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
@@ -379,8 +379,8 @@ button {
 .glitch-bet {
   animation: glitch-bet 0.2s ease-in-out;
   text-shadow:
-    -1px 0 #ff0000,
-    1px 0 #00ff00;
+    -1px 0 #ffffff,
+    1px 0 #808080;
 }
 
 /* Pulsing border animation for active bets */
