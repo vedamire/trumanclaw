@@ -10,7 +10,7 @@ const pixelFont = Press_Start_2P({
 
 export const metadata: Metadata = {
   title: 'Trumanclaw - Gamble with Death',
-  description: 'A dark betting game where you predict tomorrow\'s death count. Will it be higher or lower? Place your bets and test your mortality intuition.',
+  description: 'Predict the Simulation events',
   keywords: ['betting', 'game', 'prediction', 'dark theme'],
   icons: {
     icon: '/favicon.jpg',
