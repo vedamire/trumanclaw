@@ -121,15 +121,14 @@ export function DeathCounter({ date, count, previousCount, previousDate, label =
         )}
         */}
 
-        {/* Decorative skull watermark */}
-        <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 opacity-10">
+        {/* Decorative logo watermark */}
+        <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 opacity-20">
           <Image
-            src="/logo/new_grim_logo.png"
+            src="/logo/fallingtv.png"
             alt=""
             width={96}
             height={96}
             className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24"
-            style={{ imageRendering: 'pixelated' }}
           />
         </div>
       </div>
