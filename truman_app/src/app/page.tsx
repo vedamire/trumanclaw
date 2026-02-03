@@ -1006,32 +1006,32 @@ export default function GrimMarket() {
           {/* Balance display for logged in users */}
           {user && (
             <div className="max-w-md mx-auto mb-8">
-              <div className="pixel-panel p-4 text-center">
-                <p className="text-gray-400 text-xs uppercase tracking-wider mb-1">Your Balance</p>
-                <p className="text-2xl font-bold text-green-400">{formatCurrency(userBalance)}</p>
+              <div className="pixel-panel-white p-4 text-center">
+                <p className="text-gray-600 text-xs uppercase tracking-wider mb-1">Your Balance</p>
+                <p className="text-2xl font-bold text-black">{formatCurrency(userBalance)}</p>
               </div>
             </div>
           )}
 
           {/* How it works - Mirage9 */}
           <div className="mt-16 text-center w-[85%] mx-auto">
-            <h3 className="text-xs font-semibold text-gray-400 mb-6 uppercase tracking-wider">How It Works</h3>
+            <h3 className="text-xs font-semibold text-gray-600 mb-6 uppercase tracking-wider">How It Works</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-white">1</div>
-                <p className="text-gray-400 text-[10px] leading-relaxed">
+              <div className="pixel-panel-white p-4">
+                <div className="text-xl mb-2 text-black">1</div>
+                <p className="text-gray-600 text-[10px] leading-relaxed">
                   Cycle through 3 games: Car Stunt → Plane → Boat
                 </p>
               </div>
-              <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-white">2</div>
-                <p className="text-gray-400 text-[10px] leading-relaxed">
+              <div className="pixel-panel-white p-4">
+                <div className="text-xl mb-2 text-black">2</div>
+                <p className="text-gray-600 text-[10px] leading-relaxed">
                   Bet $100 on each outcome and watch results
                 </p>
               </div>
-              <div className="pixel-panel-dark p-4">
-                <div className="text-xl mb-2 text-white">3</div>
-                <p className="text-gray-400 text-[10px] leading-relaxed">
+              <div className="pixel-panel-white p-4">
+                <div className="text-xl mb-2 text-black">3</div>
+                <p className="text-gray-600 text-[10px] leading-relaxed">
                   Win 2x ($200) if you guess correctly!
                 </p>
               </div>
