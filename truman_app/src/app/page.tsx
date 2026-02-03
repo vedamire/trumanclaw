@@ -1092,7 +1092,9 @@ export default function GrimMarket() {
       <div className="fixed inset-0 bg-black/40 pointer-events-none" />
 
       {/* Falling TVs animation */}
-      <FallingTVs />
+      {isMirage9Mode && (
+        <FallingTVs variant="sides" sideWidthPercent={12} autoSideWidth zIndex={55} />
+      )}
 
       {/* Header - compact in mirage9 fullscreen mode */}
       <Header
