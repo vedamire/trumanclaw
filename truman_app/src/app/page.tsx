@@ -134,7 +134,7 @@ export default function GrimMarket() {
   const [mirage10LastResult, setMirage10LastResult] = useState<{ won: boolean; amount: number } | null>(null);
 
   // Mirage9 help modal state
-  const [showMirage9Help, setShowMirage9Help] = useState(false);
+  const [showMirage9Help, setShowMirage9Help] = useState(true);
 
   // Auth state
   const { isLoading: authLoading, user, error: authError } = db.useAuth();
