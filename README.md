@@ -1,6 +1,6 @@
 # Trumanclaw
 
-**[matrix.trumanclaw.com](https://matrix.trumanclaw.com/)** · **[𝕏 @trumanclaw](https://x.com/trumanclaw)** · **[Telegram](https://t.me/+mS-_0bGXslo4MzEx)**
+**[matrix.trumanclaw.com](https://matrix.trumanclaw.com/)** · **[𝕏 @trumanclaw](https://x.com/trumanclaw)** · **[Telegram](https://t.me/trumanclaw)**
 
 ![Demo](assets/demo.gif)
 
