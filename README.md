@@ -1,6 +1,6 @@
 # Trumanclaw
 
-**[matrix.trumanclaw.com](https://matrix.trumanclaw.com/)**
+**[matrix.trumanclaw.com](https://matrix.trumanclaw.com/)** · **[𝕏 @trumanclaw](https://x.com/trumanclaw)**
 
 ![Demo](assets/demo.gif)
 
