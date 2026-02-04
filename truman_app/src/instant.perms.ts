@@ -26,6 +26,14 @@ const rules = {
     },
     bind: ["isOwner", "auth.id in data.ref('user.id')"],
   },
+  agents: {
+    allow: {
+      view: "true",
+      create: "false", // Only admin SDK can create
+      update: "false",
+      delete: "false",
+    },
+  },
 } satisfies InstantRules;
 
 export default rules;

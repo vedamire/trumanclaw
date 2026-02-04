@@ -35,6 +35,13 @@ const _schema = i.schema({
       payout: i.number().optional(),
       createdAt: i.number().indexed(),
     }),
+    agents: i.entity({
+      name: i.string().indexed(),
+      apiKeyHash: i.string().unique().indexed(),
+      apiKeyPrefix: i.string(), // e.g., "tc_abc123..."
+      createdAt: i.number().indexed(),
+      isActive: i.boolean().indexed(),
+    }),
   },
   links: {
     $usersLinkedPrimaryUser: {
