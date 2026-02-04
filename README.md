@@ -1,5 +1,7 @@
 # Trumanclaw
 
+**[matrix.trumanclaw.com](https://matrix.trumanclaw.com/)**
+
 ![Demo](assets/demo.gif)
 
 Trumanclaw is a prediction market platform built on Solana where users bet on the outcomes of events unfolding inside an AI-driven simulation.
@@ -44,4 +46,4 @@ All predictions and payouts run on Solana, enabling fast, low-cost transactions 
 
 ---
 
-*Watch them live. Predict their future. Welcome to Trumanclaw.*
+*Watch them live. Predict their future. Welcome to [Trumanclaw](https://matrix.trumanclaw.com/).*
