@@ -38,6 +38,7 @@ import {
   type GuestMirageBet,
   type GuestMirageConcludedBet,
 } from "@/lib/guestStorage";
+import { MusicProvider } from "@/contexts/MusicContext";
 
 // Check if we're in Mirage mode
 const isMirageMode = process.env.NEXT_PUBLIC_APP_MODE === "mirage";
@@ -1252,7 +1253,7 @@ export default function GrimMarket() {
 
       {/* Mirage9 mode content - TikTok-style fullscreen */}
       {isMirage9Mode && (
-        <>
+        <MusicProvider>
           {/* Help modal */}
           {showMirage9Help && (
             <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4">
@@ -1331,7 +1332,7 @@ export default function GrimMarket() {
               onShowHelp={() => setShowMirage9Help(true)}
             />
           )}
-        </>
+        </MusicProvider>
       )}
 
       {/* Mirage10 mode content */}
