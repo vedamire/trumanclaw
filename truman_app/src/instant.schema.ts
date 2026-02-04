@@ -37,13 +37,10 @@ const _schema = i.schema({
     }),
     agents: i.entity({
       name: i.string().indexed(),
-      description: i.string().optional(),
       apiKeyHash: i.string().unique().indexed(),
       apiKeyPrefix: i.string(), // e.g., "tc_abc123..."
-      claimCode: i.string().unique().indexed(),
       createdAt: i.number().indexed(),
       isActive: i.boolean().indexed(),
-      claimedAt: i.number().optional(),
     }),
   },
   links: {
@@ -71,18 +68,6 @@ const _schema = i.schema({
         on: "$users",
         has: "many",
         label: "bets",
-      },
-    },
-    agentOwner: {
-      forward: {
-        on: "agents",
-        has: "one",
-        label: "owner",
-      },
-      reverse: {
-        on: "$users",
-        has: "many",
-        label: "ownedAgents",
       },
     },
   },
