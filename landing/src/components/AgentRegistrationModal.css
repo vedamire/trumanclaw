@@ -109,6 +109,15 @@
   cursor: not-allowed;
 }
 
+.modal-textarea {
+  resize: vertical;
+  min-height: 60px;
+  max-height: 150px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
 .modal-error {
   color: #ff6b6b;
   font-size: 0.95rem;
@@ -197,6 +206,34 @@
 .copy-button:hover {
   background: var(--accent-blue);
   color: var(--bg-dark);
+}
+
+/* Claim section */
+.claim-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.claim-label {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.claim-description {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.claim-url {
+  font-size: 0.75rem;
+  word-break: break-all;
 }
 
 /* Responsive */

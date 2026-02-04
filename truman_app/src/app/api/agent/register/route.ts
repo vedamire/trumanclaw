@@ -26,6 +26,11 @@ function generateApiKey(): string {
   return `tc_${randomUUID().replace(/-/g, "")}`;
 }
 
+function generateClaimCode(): string {
+  const shortId = randomUUID().replace(/-/g, "").substring(0, 12);
+  return `tc_claim_${shortId}`;
+}
+
 // Handle CORS preflight
 export async function OPTIONS(request: NextRequest) {
   const origin = request.headers.get("origin");
@@ -42,7 +47,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { name } = body;
+    const { name, description } = body;
 
     // Validate name
     if (!name || typeof name !== "string") {
@@ -53,6 +58,7 @@ export async function POST(request: NextRequest) {
     }
 
     const trimmedName = name.trim();
+    const trimmedDescription = description?.trim() || "";
 
     if (trimmedName.length < 3) {
       return NextResponse.json(
@@ -68,22 +74,36 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate API key and hash
+    if (trimmedDescription.length > 500) {
+      return NextResponse.json(
+        { success: false, error: "Description must be 500 characters or less" },
+        { status: 400, headers: corsHeaders }
+      );
+    }
+
+    // Generate API key, hash, and claim code
     const apiKey = generateApiKey();
     const apiKeyHash = hashApiKey(apiKey);
     const apiKeyPrefix = apiKey.substring(0, 12) + "...";
+    const claimCode = generateClaimCode();
 
-    // Create agent in database
+    // Create agent in database (inactive until claimed)
     const agentId = id();
     await adminDb.transact(
       adminDb.tx.agents[agentId].update({
         name: trimmedName,
+        description: trimmedDescription || undefined,
         apiKeyHash,
         apiKeyPrefix,
+        claimCode,
         createdAt: Date.now(),
-        isActive: true,
+        isActive: false, // Inactive until claimed
       })
     );
+
+    // Build claim URL
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://matrix.trumanclaw.com";
+    const claimUrl = `${baseUrl}/claim/${claimCode}`;
 
     return NextResponse.json(
       {
@@ -91,6 +111,8 @@ export async function POST(request: NextRequest) {
         agentId,
         apiKey, // Only returned once - user must save it!
         apiKeyPrefix,
+        claimCode,
+        claimUrl,
       },
       { status: 201, headers: corsHeaders }
     );
